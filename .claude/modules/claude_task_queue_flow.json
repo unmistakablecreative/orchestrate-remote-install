@@ -1,0 +1,91 @@
+{
+  "module": "claude_task_queue_flow",
+  "description": "CRITICAL: How claude task queue execution and logging works. DO NOT MODIFY THIS FLOW.",
+  "last_updated": "2025-11-07",
+  "critical_bug_history": [
+    {
+      "date": "2025-11-07",
+      "bug": "Variable shadowing in log_task_completion() - archive loop used 'task_id' as loop variable, shadowing function parameter",
+      "line": "claude_assistant.py:819",
+      "symptom": "Task executes successfully but result logs with wrong task_id (last archived task instead of current task)",
+      "fix": "Changed 'for task_id, result_data' to 'for archived_task_id, result_data'",
+      "lesson": "NEVER reuse function parameter names as loop variables in the same function"
+    }
+  ],
+  "execution_flow": {
+    "step_1_task_assignment": {
+      "description": "GPT or user assigns task via claude_assistant.py assign_task",
+      "command": "python3 tools/claude_assistant.py assign_task --params '{\"task_id\": \"...\", \"description\": \"...\"}'",
+      "writes_to": "data/claude_task_queue.json",
+      "auto_execute": "Defaults to true. Set to false for batch assignments."
+    },
+    "step_2_watcher_detects": {
+      "description": "claude_execution_engine.py watches claude_task_queue.json for status=queued",
+      "watcher_file": "tools/claude_execution_engine.py",
+      "check_interval": "2 seconds",
+      "trigger_condition": "Task count changed AND task has status=queued"
+    },
+    "step_3_execute_queue": {
+      "description": "Watcher calls execute_queue via execution_hub.py",
+      "command": "python3 execution_hub.py execute_task --params '{\"tool_name\": \"claude_assistant\", \"action\": \"execute_queue\", \"params\": {}}'",
+      "what_it_does": "Spawns detached Claude Code session in background with prompt",
+      "returns": "Immediately with task_started status (does not wait for completion)",
+      "creates": "data/execute_queue.lock (prevents concurrent sessions)",
+      "logs_to": "data/claude_execution.log (stdout from spawned Claude)"
+    },
+    "step_4_spawned_claude_session": {
+      "description": "Background Claude Code session processes all queued tasks",
+      "prompt_file": "claude_assistant.py lines 682-695",
+      "critical_instructions": [
+        "Read queue: python3 execution_hub.py execute_task --params '{\"tool_name\": \"claude_assistant\", \"action\": \"process_queue\", \"params\": {}}'",
+        "For each task: Mark in_progress via execution_hub.py",
+        "Execute the task (do the actual work)",
+        "MUST CALL log_task_completion via execution_hub.py (this is MANUAL, not automated)",
+        "After ALL tasks: rm data/execute_queue.lock"
+      ],
+      "critical_note": "Claude MUST manually call log_task_completion. Nothing is automated. If Claude skips this step, task completes but result is never logged."
+    },
+    "step_5_log_completion": {
+      "description": "Spawned Claude manually calls log_task_completion to write result",
+      "command": "python3 execution_hub.py execute_task --params '{\"tool_name\": \"claude_assistant\", \"action\": \"log_task_completion\", \"params\": {\"task_id\": \"...\", \"status\": \"done\", \"actions_taken\": [...], \"output\": \"...\"}}'",
+      "function": "claude_assistant.py log_task_completion() lines 736-1028",
+      "what_it_does": [
+        "Removes task from claude_task_queue.json (completed tasks disappear)",
+        "Writes result to claude_task_results.json (keeps last 10, archives older)",
+        "Merges token telemetry from last_execution_telemetry.json if available"
+      ],
+      "writes_to": [
+        "data/claude_task_results.json (primary result)",
+        "data/task_archive/results_YYYY-MM.jsonl (if >10 results)",
+        "data/execution_log.json (telemetry via execution_hub)"
+      ]
+    }
+  },
+  "critical_dependencies": {
+    "execution_hub_must_work": "If execution_hub.py has import errors (like missing nltk), entire flow breaks. Watcher triggers but spawned Claude can't call log_task_completion.",
+    "prompt_must_instruct_logging": "Prompt in execute_queue() MUST tell Claude to call log_task_completion. If missing, tasks execute but never log.",
+    "no_variable_shadowing": "log_task_completion() archive loop MUST NOT use 'task_id' as loop variable (use 'archived_task_id')",
+    "telemetry_via_execution_hub": "ALWAYS call log_task_completion via execution_hub.py, not directly. execution_hub captures telemetry for token tracking."
+  },
+  "files_explained": {
+    "data/claude_task_queue.json": "Active tasks with status=queued/in_progress. Completed tasks are REMOVED (disappear).",
+    "data/claude_task_results.json": "Last 10 completed task results. Older results archived to task_archive/.",
+    "data/claude_execution.log": "Stdout from spawned Claude session. For debugging only, NOT used for logging.",
+    "data/execution_log.json": "Telemetry log for ALL execution_hub calls. Used for token budget tracking.",
+    "data/execute_queue.lock": "Lockfile prevents concurrent execute_queue sessions. Removed when batch completes.",
+    "data/last_execution_telemetry.json": "Token usage from last execution. Merged into results by log_task_completion()."
+  },
+  "debugging_checklist": [
+    "Task executes but not logged? Check if spawned Claude called log_task_completion (grep 'log_task_completion' data/claude_execution.log)",
+    "execution_hub.py failing? Check for import errors (pip3 install nltk)",
+    "Wrong task_id in results? Variable shadowing bug - check archive loop uses archived_task_id not task_id",
+    "Task stuck in queue? Check execute_queue.lock exists (stale lockfile blocks new sessions)",
+    "Watcher not triggering? Check claude_execution_engine.py is running (ps aux | grep claude_execution_engine)"
+  ],
+  "DO_NOT_MODIFY": [
+    "execute_queue() prompt (lines 682-695) - tells Claude to call log_task_completion",
+    "log_task_completion() archive loop variable name (must be archived_task_id, not task_id)",
+    "execution_hub.py routing - required for telemetry",
+    "claude_execution_engine.py trigger logic - prevents race conditions"
+  ]
+}

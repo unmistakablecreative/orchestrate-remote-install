@@ -1,0 +1,39 @@
+{
+  "module": "tool_building",
+  "token_count_estimate": 4000,
+  "triggers": ["build tool", "create tool", "new tool", "add action", "register tool", "system_settings"],
+  "patterns": {
+    "tool_structure": {
+      "required_files": [
+        "tools/{tool_name}.py - Main implementation",
+        "Update execution_hub.py to register tool",
+        "Add to system_settings.ndjson if needed"
+      ],
+      "discovery": "curl http://localhost:5001/get_supported_actions"
+    },
+    "registration": {
+      "hybrid_routing": "Execution_hub for registered tools, direct calls for utilities",
+      "telemetry": "Hub routing captures token usage, success rates, execution times"
+    },
+    "when_to_build": {
+      "trigger": "Doing something 2-3x manually",
+      "permission": "FULL PERMISSION WITHOUT ASKING",
+      "log_format": "🔧 Built/Optimized: [tool] - [what] - [why]"
+    }
+  },
+  "execution_times": {
+    "tool_implementations": "180-420 sec (3-7 min)",
+    "code_modifications": "60-180 sec (1-3 min)",
+    "note": "Estimates are 15-25x too high usually"
+  },
+  "tool_actions": [
+    "system_settings.register_tool",
+    "system_settings.list_tools",
+    "automation_engine.execute_workflow"
+  ],
+  "file_paths": {
+    "tools_dir": "tools/",
+    "execution_hub": "execution_hub.py",
+    "system_settings": "data/system_settings.ndjson"
+  }
+}

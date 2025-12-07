@@ -1,0 +1,123 @@
+{
+  "url": "https://developers.kit.com/api-reference/broadcasts/get-stats-for-a-list-of-broadcasts",
+  "title": "Kit Developer Documentation",
+  "method": "GET",
+  "endpoint": "/v4/broadcasts/stats",
+  "headings": [
+    "Get stats for a list of broadcasts"
+  ],
+  "parameters": [
+    "broadcasts",
+    "click_rate",
+    "emails_opened",
+    "end_cursor",
+    "has_next_page",
+    "has_previous_page",
+    "open_rate",
+    "pagination",
+    "per_page",
+    "progress",
+    "recipients",
+    "start_cursor",
+    "stats",
+    "status",
+    "total_clicks",
+    "unsubscribe_rate",
+    "unsubscribes"
+  ],
+  "curl_examples": [
+    "curl --request GET \\\n  --url https://api.kit.com/v4/broadcasts/stats \\\n  --header 'X-Kit-Api-Key: <api-key>'"
+  ],
+  "json_examples": [
+    {
+      "broadcasts": [
+        {
+          "id": 158,
+          "stats": {
+            "recipients": 0,
+            "open_rate": 0,
+            "emails_opened": 0,
+            "click_rate": 0,
+            "unsubscribe_rate": 0,
+            "unsubscribes": 0,
+            "total_clicks": 0,
+            "show_total_clicks": false,
+            "status": "draft",
+            "progress": 0,
+            "open_tracking_disabled": false,
+            "click_tracking_disabled": false
+          }
+        },
+        {
+          "id": 157,
+          "stats": {
+            "recipients": 0,
+            "open_rate": 0,
+            "emails_opened": 0,
+            "click_rate": 0,
+            "unsubscribe_rate": 0,
+            "unsubscribes": 0,
+            "total_clicks": 0,
+            "show_total_clicks": false,
+            "status": "draft",
+            "progress": 0,
+            "open_tracking_disabled": false,
+            "click_tracking_disabled": false
+          }
+        }
+      ],
+      "pagination": {
+        "has_previous_page": false,
+        "has_next_page": false,
+        "start_cursor": "WzE1OF0=",
+        "end_cursor": "WzE1N10=",
+        "per_page": 500
+      }
+    },
+    {
+      "id": 158,
+      "stats": {
+        "recipients": 0,
+        "open_rate": 0,
+        "emails_opened": 0,
+        "click_rate": 0,
+        "unsubscribe_rate": 0,
+        "unsubscribes": 0,
+        "total_clicks": 0,
+        "show_total_clicks": false,
+        "status": "draft",
+        "progress": 0,
+        "open_tracking_disabled": false,
+        "click_tracking_disabled": false
+      }
+    },
+    {
+      "id": 157,
+      "stats": {
+        "recipients": 0,
+        "open_rate": 0,
+        "emails_opened": 0,
+        "click_rate": 0,
+        "unsubscribe_rate": 0,
+        "unsubscribes": 0,
+        "total_clicks": 0,
+        "show_total_clicks": false,
+        "status": "draft",
+        "progress": 0,
+        "open_tracking_disabled": false,
+        "click_tracking_disabled": false
+      }
+    },
+    {
+      "has_previous_page": false,
+      "has_next_page": false,
+      "start_cursor": "WzE1OF0=",
+      "end_cursor": "WzE1N10=",
+      "per_page": 500
+    }
+  ],
+  "all_code_blocks": [
+    "curl --request GET \\\n  --url https://api.kit.com/v4/broadcasts/stats \\\n  --header 'X-Kit-Api-Key: <api-key>'",
+    "{\n  \"broadcasts\": [\n    {\n      \"id\": 158,\n      \"stats\": {\n        \"recipients\": 0,\n        \"open_rate\": 0,\n        \"emails_opened\": 0,\n        \"click_rate\": 0,\n        \"unsubscribe_rate\": 0,\n        \"unsubscribes\": 0,\n        \"total_clicks\": 0,\n        \"show_total_clicks\": false,\n        \"status\": \"draft\",\n        \"progress\": 0,\n        \"open_tracking_disabled\": false,\n        \"click_tracking_disabled\": false\n      }\n    },\n    {\n      \"id\": 157,\n      \"stats\": {\n        \"recipients\": 0,\n        \"open_rate\": 0,\n        \"emails_opened\": 0,\n        \"click_rate\": 0,\n        \"unsubscribe_rate\": 0,\n        \"unsubscribes\": 0,\n        \"total_clicks\": 0,\n        \"show_total_clicks\": false,\n        \"status\": \"draft\",\n        \"progress\": 0,\n        \"open_tracking_disabled\": false,\n        \"click_tracking_disabled\": false\n      }\n    }\n  ],\n  \"pagination\": {\n    \"has_previous_page\": false,\n    \"has_next_page\": false,\n    \"start_cursor\": \"WzE1OF0=\",\n    \"end_cursor\": \"WzE1N10=\",\n    \"per_page\": 500\n  }\n}"
+  ]
+}

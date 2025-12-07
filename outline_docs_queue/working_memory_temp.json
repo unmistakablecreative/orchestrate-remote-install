@@ -1,0 +1,39 @@
+{
+  "major_completions": {
+    "pitch_deck": {
+      "completed": "2025-11-08",
+      "location": "data/investor_deck_v2.pdf",
+      "status": "sent_to_array_ventures"
+    },
+    "newsletter_sequence": {
+      "completed": "2025-11-10",
+      "doc_id": "270349aa-8d70-4d89-96c9-2b84d4a59edd",
+      "status": "evaluated_ready_to_schedule"
+    },
+    "dual_agent_demo": {
+      "completed": "2025-11-09",
+      "location": "viral_commercials/transcripts/dual_agent.md",
+      "status": "published_unlisted"
+    },
+    "beta_infrastructure": {
+      "completed": "2025-11-09",
+      "components": [
+        "orchestrate_private_beta.json",
+        "email_list_tool.py",
+        "airtable_form",
+        "invite_automation"
+      ],
+      "status": "operational"
+    },
+    "fundraise_outreach": {
+      "completed": "2025-11-09",
+      "doc_id": "3db4fac8-6c69-4e1f-93ae-3b8ee41d97b5",
+      "status": "array_ventures_contacted_others_pending"
+    }
+  },
+  "active_crms": [
+    "orchestrate_private_beta.json",
+    "orchestrate_fundraise_crm.json"
+  ],
+  "context_refresh": "2025-11-13T09:35:00Z"
+}

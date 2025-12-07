@@ -1,0 +1,38 @@
+# Credentials - NEVER commit
+credentials.json
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+
+# Data files (user-specific)
+data/claude_task_queue.json
+data/claude_task_results.json
+data/outline_queue.json
+data/execution_log.json
+data/thread_state.json
+data/hook_debug.log
+data/claude_execution.log
+data/log_archive/
+
+# Large files
+*.dmg
+*.pdf
+*.mp3
+*.log
+automation_engine.log
+execution_log.json
+
+# macOS
+.DS_Store
+
+# Outline docs queue (processed locally)
+outline_docs_queue/*.md
+
+# IDE
+.vscode/
+.idea/

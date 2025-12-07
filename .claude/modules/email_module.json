@@ -1,0 +1,26 @@
+{
+  "module": "email",
+  "token_count_estimate": 2000,
+  "triggers": ["email", "inbox", "message", "send email", "nylas", "calendar"],
+  "patterns": {
+    "email_processing": {
+      "tool": "nylas_inboxv2",
+      "actions": ["read", "send", "search", "archive"]
+    },
+    "calendar_management": {
+      "tool": "nylas_calendar",
+      "actions": ["list_events", "create_event", "update_event", "find_availability"]
+    }
+  },
+  "tool_actions": [
+    "nylas_inboxv2.read_emails",
+    "nylas_inboxv2.send_email",
+    "nylas_inboxv2.search_emails",
+    "nylas_calendar.list_events",
+    "nylas_calendar.create_event"
+  ],
+  "file_paths": {
+    "credentials": "data/nylas_credentials.json",
+    "templates": "data/email_templates/"
+  }
+}

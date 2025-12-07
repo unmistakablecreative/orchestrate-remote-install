@@ -1,0 +1,60 @@
+{
+  "url": "https://developerdocs.instructure.com/services/canvas/resources/quiz_submission_files#method.quizzes-quiz_submission_files.create",
+  "title": "Quiz Submission Files | Instructure Developer Documentation Portal",
+  "method": "GET",
+  "endpoint": "Started",
+  "headings": [
+    "Quiz Submission Files",
+    "Quiz Submission Files API",
+    "Upload a file"
+  ],
+  "parameters": [
+    "AWSAccessKeyId",
+    "Filename",
+    "Policy",
+    "Signature",
+    "Type",
+    "acl",
+    "attachments",
+    "key",
+    "upload_params",
+    "upload_url"
+  ],
+  "curl_examples": [],
+  "json_examples": [
+    {
+      "attachments": [
+        {
+          "upload_url": "https://some-bucket.s3.amazonaws.com/",
+          "upload_params": {
+            "key": "/users/1234/files/answer_pic.jpg",
+            "acl": "private",
+            "Filename": "answer_pic.jpg",
+            "AWSAccessKeyId": "some_id",
+            "Policy": "some_opaque_string",
+            "Signature": "another_opaque_string",
+            "Content-Type": "image/jpeg"
+          }
+        }
+      ]
+    },
+    {
+      "upload_url": "https://some-bucket.s3.amazonaws.com/",
+      "upload_params": {
+        "key": "/users/1234/files/answer_pic.jpg",
+        "acl": "private",
+        "Filename": "answer_pic.jpg",
+        "AWSAccessKeyId": "some_id",
+        "Policy": "some_opaque_string",
+        "Signature": "another_opaque_string",
+        "Content-Type": "image/jpeg"
+      }
+    }
+  ],
+  "all_code_blocks": [
+    "{\n\n  \"attachments\": [\n\n    {\n\n      \"upload_url\": \"https://some-bucket.s3.amazonaws.com/\",\n\n      \"upload_params\": {\n\n        \"key\": \"/users/1234/files/answer_pic.jpg\",\n\n        \"acl\": \"private\",\n\n        \"Filename\": \"answer_pic.jpg\",\n\n        \"AWSAccessKeyId\": \"some_id\",\n\n        \"Policy\": \"some_opaque_string\",\n\n        \"Signature\": \"another_opaque_string\",\n\n        \"Content-Type\": \"image/jpeg\"\n\n      }\n\n    }\n\n  ]\n\n}",
+    "POST /api/v1/courses/:course_id/quizzes/:quiz_id/submissions/self/files",
+    "url:POST|/api/v1/courses/:course_id/quizzes/:quiz_id/submissions/self/files",
+    "on_duplicate"
+  ]
+}

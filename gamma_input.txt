@@ -1,0 +1,9 @@
+**Prompt:**
+Create a presentation for a community college Intro to Biology class on the following topics:
+
+- Biology of Fungi
+- Lifecycle of Fungi
+- Harmful Fungi
+- Beneficial Fungi
+
+The presentation should contain approximately **40 cards**. Each card should be **simple**, suitable for non-majors, and use **3–5 bullet points per slide**. Use clear language, avoid technical jargon, and organize the content logically.

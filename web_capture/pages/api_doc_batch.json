@@ -1,0 +1,18 @@
+[
+  {
+    "url": "https://developers.kit.com/api-reference/accounts/get-current-account",
+    "output_name": "convertkit_account_current"
+  },
+  {
+    "url": "https://developers.kit.com/api-reference/accounts/get-growth-stats",
+    "output_name": "convertkit_growth_stats"
+  },
+  {
+    "url": "https://developers.kit.com/api-reference/broadcasts/create-a-broadcast",
+    "output_name": "convertkit_broadcast_create"
+  },
+  {
+    "url": "https://developers.kit.com/api-reference/broadcasts/get-stats-for-a-list-of-broadcasts",
+    "output_name": "convertkit_broadcast_stats_list"
+  }
+]

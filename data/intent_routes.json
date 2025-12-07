@@ -1,0 +1,108 @@
+{
+    "entries": {
+        "send_email": {
+            "icon": "✉️",
+            "natural_language_phrases": [
+                "send email to {{recipient}}",
+                "email {{recipient}}",
+                "compose email to {{recipient}}",
+                "message {{recipient}}"
+            ],
+            "description": "Send an email to a recipient",
+            "tool_name": "nylas_inbox",
+            "action": "send_email",
+            "params": {
+                "to": "{{recipient}}",
+                "subject": "{{subject}}",
+                "body": "{{body}}"
+            }
+        },
+        "check_inbox": {
+            "icon": "📬",
+            "natural_language_phrases": [
+                "check my inbox",
+                "show my emails",
+                "what's in my inbox",
+                "any new emails"
+            ],
+            "description": "Check and summarize inbox emails",
+            "tool_name": "nylas_inbox",
+            "action": "generate_inbox_summary",
+            "params": {}
+        },
+        "create_quiz": {
+            "icon": "📝",
+            "natural_language_phrases": [
+                "create a quiz called {{name}}",
+                "make quiz {{name}}",
+                "new quiz {{name}}",
+                "add quiz {{name}}"
+            ],
+            "description": "Create a new Canvas quiz draft",
+            "tool_name": "canvas_tool",
+            "action": "create_draft",
+            "params": {
+                "entity_type": "quiz",
+                "entity_name": "{{name}}"
+            }
+        },
+        "create_module": {
+            "icon": "📚",
+            "natural_language_phrases": [
+                "create module {{name}}",
+                "new module {{name}}",
+                "add module {{name}}",
+                "make module {{name}}"
+            ],
+            "description": "Create a new Canvas module draft",
+            "tool_name": "canvas_tool",
+            "action": "create_draft",
+            "params": {
+                "entity_type": "module",
+                "entity_name": "{{name}}"
+            }
+        },
+        "view_calendar": {
+            "icon": "📅",
+            "natural_language_phrases": [
+                "show my calendar",
+                "what's on my schedule",
+                "upcoming events",
+                "my meetings"
+            ],
+            "description": "View upcoming calendar events",
+            "tool_name": "nylas_calendar",
+            "action": "list_upcoming_events",
+            "params": {}
+        },
+        "assign_task_to_claude": {
+            "icon": "🤖",
+            "natural_language_phrases": [
+                "assign a task to claude",
+                "give claude a task",
+                "claude do this",
+                "task for claude"
+            ],
+            "description": "Assign a new task to Claude Code queue",
+            "tool_name": "claude_assistant",
+            "action": "assign_task",
+            "params": {
+                "description": "{{description}}",
+                "priority": "{{priority}}"
+            }
+        },
+        "execute_claude_queue": {
+            "icon": "▶️",
+            "natural_language_phrases": [
+                "execute claude queue",
+                "run pending tasks",
+                "process the queue",
+                "start claude tasks"
+            ],
+            "description": "Trigger Claude to process all pending tasks",
+            "tool_name": "claude_assistant",
+            "action": "execute_queue",
+            "params": {}
+        }
+    }
+}

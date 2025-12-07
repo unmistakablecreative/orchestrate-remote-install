@@ -1,0 +1,39 @@
+{
+  "url": "https://developers.kit.com/api-reference/accounts/get-email-stats",
+  "title": "Kit Developer Documentation",
+  "method": "GET",
+  "endpoint": "/v4/account/email_stats",
+  "headings": [
+    "Get email stats"
+  ],
+  "parameters": [
+    "clicked",
+    "email_stats_mode",
+    "ending",
+    "opened",
+    "sent",
+    "starting",
+    "stats"
+  ],
+  "curl_examples": [
+    "curl --request GET \\\n  --url https://api.kit.com/v4/account/email_stats \\\n  --header 'X-Kit-Api-Key: <api-key>'"
+  ],
+  "json_examples": [
+    {
+      "stats": {
+        "sent": 6,
+        "clicked": 3,
+        "opened": 6,
+        "email_stats_mode": "last_90",
+        "open_tracking_enabled": true,
+        "click_tracking_enabled": true,
+        "starting": "2022-11-19T11:43:55Z",
+        "ending": "2023-02-17T11:43:55Z"
+      }
+    }
+  ],
+  "all_code_blocks": [
+    "curl --request GET \\\n  --url https://api.kit.com/v4/account/email_stats \\\n  --header 'X-Kit-Api-Key: <api-key>'",
+    "{\n  \"stats\": {\n    \"sent\": 6,\n    \"clicked\": 3,\n    \"opened\": 6,\n    \"email_stats_mode\": \"last_90\",\n    \"open_tracking_enabled\": true,\n    \"click_tracking_enabled\": true,\n    \"starting\": \"2022-11-19T11:43:55Z\",\n    \"ending\": \"2023-02-17T11:43:55Z\"\n  }\n}"
+  ]
+}

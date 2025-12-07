@@ -1,0 +1,16 @@
+{
+  "_readme": "Add API collection mappings here. Format: 'company_name': 'postman_collection_id'",
+  "_example": "stripe: 'abc123-def456-collection-id'",
+  "_instructions": "Use refresh_api_collections action to automatically discover and add new collections",
+  "airtable": "35570164-7a09be17-7652-4462-8f5d-22fe4c56d46c",
+  "asana": "35570164-4a83974a-a5b6-4cf8-9ed5-1cd187dccb3b",
+  "canvas": "35570164-dea6d7d4-0f36-4f86-a870-85da940ce1d9",
+  "claude": "35570164-e20ac053-35d9-452e-ba99-732ef679bec9",
+  "clickup": "35570164-bc4d29de-0f8c-4d1d-8e4a-304b477b66e6",
+  "dropbox": "35570164-c3dd66b8-fd77-4f0e-a41d-1457c5672e39",
+  "instagram": "35570164-0121dbfc-0314-4522-b2a5-0739df010303",
+  "notion": "35570164-db48baf7-25a4-44e6-b1f6-6f43a07b49b1",
+  "twitter": "35570164-fc89785a-a78e-4fb4-95c7-d56d3502288e",
+  "youtube": "35570164-947bbc48-0a50-44e3-9c98-46bf451beefb",
+  "zoom": "35570164-88c6728a-a477-42e5-a6fe-86a2849b0bf3"
+}

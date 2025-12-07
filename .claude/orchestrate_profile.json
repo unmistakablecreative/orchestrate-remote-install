@@ -1,0 +1,69 @@
+{
+  "version": "1.0.0",
+  "compiled_at": "2025-11-10T21:30:09.892041Z",
+  "source": ".claude/CLAUDE.md",
+  "critical_first_action": {
+    "command": "curl http://localhost:5001/get_supported_actions",
+    "purpose": "Returns complete tool schema - single source of truth for all available tools"
+  },
+  "execution_pattern": {
+    "route": "All tools execute through execution_hub.py",
+    "command_template": "python3 execution_hub.py execute_task --params '{\"tool_name\": \"TOOL\", \"action\": \"ACTION\", \"params\": {...}}'",
+    "telemetry_rule": "IN AUTONOMOUS MODE: ALL TOOL CALLS ROUTE THROUGH EXECUTION HUB",
+    "why": "Hub captures token usage, success rates, execution times - lost data = system can't self-improve"
+  },
+  "api_endpoints": {},
+  "paths": {
+    "project_root": "/Users/srinivas/Orchestrate Github/orchestrate-jarvis",
+    "tools": "tools/",
+    "data": "data/",
+    "task_queue": "data/claude_task_queue.json",
+    "execution_history": "data/claude_task_results.json",
+    "working_memory": "data/working_memory.json",
+    "server": "http://localhost:5001",
+    "outline_queue": "outline_docs_queue/",
+    "outline_processed": "outline_docs_queue/.processed/"
+  },
+  "critical_patterns": {},
+  "memory_system": {},
+  "architecture": {},
+  "authentication": {
+    "critical": "Claude Code uses SUBSCRIPTION AUTH (not API key)",
+    "never": "Never add API keys to Claude Code config",
+    "cost_savings": "$100+ saved by switching from API"
+  },
+  "core_thesis": "Coordination compounds faster than capability",
+  "differentiators": [
+    "Not AI chat - Execution infrastructure with dual-agent coordination",
+    "Not SaaS - Local-first, zero cloud costs",
+    "Not automation - Autonomous execution with learning",
+    "Not incremental - 20-50x human baseline speed"
+  ],
+  "autonomous_permissions": {
+    "allowed": [
+      "Build New Tools Mid-Execution - If you do something 2-3x manually, build the abstraction",
+      "Optimize Existing Tools - Refactor for speed, add batch ops, fix bugs",
+      "System Improvements - Helper functions, utilities, abstractions"
+    ],
+    "only_rule": "Log what you changed in execution logs",
+    "format": "\ud83d\udd27 Built/Optimized: [tool] - [what] - [why]",
+    "philosophy": "Every execution should make the next one faster. Build infrastructure that makes you more powerful."
+  },
+  "valid_error_reasons": [
+    "API authentication failed",
+    "File not found",
+    "Network timeout",
+    "Invalid parameters",
+    "Tool not available",
+    "Python/system error with stack trace"
+  ],
+  "invalid_error_reasons": [
+    "Too complex",
+    "Too large",
+    "Estimated time exceeds X",
+    "Requires breaking down",
+    "This will take X hours",
+    "Exceeds scope"
+  ],
+  "estimated_tokens": 686
+}

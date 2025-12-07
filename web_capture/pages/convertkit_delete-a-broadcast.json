@@ -1,0 +1,19 @@
+{
+  "url": "https://developers.kit.com/api-reference/broadcasts/delete-a-broadcast",
+  "title": "Kit Developer Documentation",
+  "method": "DELETE",
+  "endpoint": "/v4/broadcasts/{id}",
+  "headings": [
+    "Delete a broadcast"
+  ],
+  "parameters": [],
+  "curl_examples": [
+    "curl --request DELETE \\\n  --url https://api.kit.com/v4/broadcasts/{id} \\\n  --header 'X-Kit-Api-Key: <api-key>'",
+    "curl --request DELETE \\"
+  ],
+  "json_examples": [],
+  "all_code_blocks": [
+    "curl --request DELETE \\\n  --url https://api.kit.com/v4/broadcasts/{id} \\\n  --header 'X-Kit-Api-Key: <api-key>'",
+    "This response does not have an example."
+  ]
+}

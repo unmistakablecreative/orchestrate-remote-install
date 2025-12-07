@@ -1,0 +1,424 @@
+# OrchestrateOS Project Memory
+
+> **📁 Archived Content:** Completed projects and reference material moved to `.claude/archived/` - see INDEX.md for full archive map.
+
+---
+
+## Recent Completed Projects (Nov 2025)
+
+**Token Telemetry System** ✅ (Nov 4) - Token tracking, budget routing, cost prediction
+**Autonomous Execution Production** ✅ (Nov 3) - LaunchAgent watcher, auto-auth, DMG installer
+**Dual Memory System** ✅ (Nov 4) - Working + long-term memory split
+
+📁 **Full details:** `.claude/archive/completed_projects.json`
+
+---
+
+## CRITICAL: Memory System
+
+### Working Memory vs Long-Term Memory
+
+**Working Memory** (`data/working_memory.json`):
+- **Purpose:** Ephemeral context for active Claude sessions
+- **Scope:** Current task execution only
+- **Lifespan:** Reset after task completion via `clear_working_memory()`
+- **Content:** Temporary data, active workflows, session-specific context
+- **Auto-loaded:** Injected into Claude Code sessions automatically
+
+**Long-Term Memory** (`.claude/CLAUDE.md`):
+- **Purpose:** Persistent project knowledge and patterns
+- **Scope:** Entire project, all future sessions
+- **Lifespan:** Permanent unless explicitly updated
+- **Content:** System architecture, critical patterns, file paths, doc IDs, completed work
+- **Manual updates:** Edit via Git commits or via task instructions
+
+**Why Two Memory Systems:**
+- Prevents mid-thread amnesia (session context preserved)
+- Prevents memory pollution (temporary data doesn't persist)
+- Clear separation: ephemeral vs permanent knowledge
+- Working memory can be cleared without losing project knowledge
+
+**Clear Working Memory:**
+```bash
+python3 tools/claude_assistant.py clear_working_memory --params '{}'
+
+# Or preserve specific keys:
+python3 tools/claude_assistant.py clear_working_memory --params '{"preserve_keys": ["important_data"]}'
+```
+
+---
+
+## CRITICAL: System Architecture
+
+### Autonomous Execution Architecture
+
+**THIS IS THE PRIMARY VALUE PROP**
+
+**The Problem We Solved:**
+- Docker API calls claude_assistant.assign_task
+- Queue files in SHARED DIRECTORY: `~/Documents/Orchestrate/`
+- Local watcher (`claude_queue_watcher.py`) spawns Claude Code sessions
+- Uses subscription auth (FREE vs $0.50-$2/task via API)
+
+**Architecture Components:**
+
+1. **Docker Container** - FastAPI + execution_hub.py, writes to shared queue
+2. **Local Queue Watcher** - Watches `~/Documents/Orchestrate/claude_task_queue.json`, spawns Claude sessions
+3. **Shared Directory** - `~/Documents/Orchestrate/` mounted in Docker, accessible to both
+4. **Claude Code** - Runs on user's Mac with subscription auth
+
+**The Flow:**
+1. User → Custom GPT → Docker API: `claude_assistant.assign_task`
+2. Docker writes to `~/Documents/Orchestrate/claude_task_queue.json`
+3. Local watcher detects task → Spawns `claude -p "Process queue"`
+4. Claude executes → Writes to `claude_task_results.json`
+5. GPT reads results via Docker API
+
+**Why This Architecture:**
+- Claude Code subscription auth can't transfer to Docker
+- FREE execution vs $100+ wasted on API keys
+- File-based coordination = simple, reliable
+- Local watcher has Keychain access
+
+**Critical Files:**
+- `~/Documents/Orchestrate/claude_queue_watcher.py` - MUST BE RUNNING
+- `~/Documents/Orchestrate/claude_task_queue.json` - Shared queue
+- `~/Documents/Orchestrate/claude_task_results.json` - Results
+
+---
+
+## CRITICAL: First Action Every Task
+
+**MANDATORY FIRST STEP:**
+```bash
+curl http://localhost:5001/get_supported_actions
+```
+
+Returns complete tool schema. This is single source of truth for all available tools.
+
+**DO NOT:**
+- Manually read files to verify tools
+- Grep system_settings.ndjson
+- Waste time on manual verification
+
+**The system has 47+ tools. Use the API.**
+
+---
+
+## CRITICAL: API Endpoints
+
+**ALL execution hub API calls use these endpoints:**
+
+```bash
+# Get supported actions (tool schema)
+GET http://localhost:5001/get_supported_actions
+
+# Execute a tool action (CORRECT ENDPOINT)
+POST http://localhost:5001/execute_task
+Content-Type: application/json
+{
+  "tool": "tool_name",
+  "action": "action_name",
+  "params": {}
+}
+```
+
+**IMPORTANT:**
+- ✅ `/execute_task` - CORRECT endpoint for tool execution
+- ❌ `/execute_action` - DOES NOT EXIST (404)
+
+**Common endpoints:**
+- `GET /get_supported_actions` - Tool schema and available actions
+- `POST /execute_task` - Execute tool with params
+- `GET /health` - Server health check
+- `GET /telemetry` - Token usage and execution stats
+
+---
+
+## CRITICAL: Telemetry Capture
+
+**IN AUTONOMOUS MODE: ALL TOOL CALLS ROUTE THROUGH EXECUTION HUB.**
+
+**Why:**
+- Direct tool calls bypass execution hub = lost telemetry
+- Hub captures token usage, success rates, execution times
+- Lost data = system can't self-improve
+
+**The Rule:**
+- ✅ `curl http://localhost:5001/execute_action` with tool params
+- ❌ Direct `python3 tools/whatever.py` calls
+- Exception: Only if hub is down
+
+**CLI mode:** Native tools OK for speed, but prefer hub routing.
+
+---
+
+## Critical Patterns
+
+### Outline Document Creation - INSTANT PROCESSING
+
+**Background watcher uses watchdog (filesystem events, sub-second detection):**
+
+```bash
+# Simplest way - fully automated
+Write("outline_docs_queue/my-doc.md", content)
+# Watcher detects in 1-2 seconds, creates doc, archives to .processed/
+```
+
+**Auto-routing by keywords:**
+- Video (sora, scene, script) → Video Content Pipeline
+- Technical (spec, api, architecture) → Technical Documents
+- Blog (blog, article) → Blog Content Pipeline
+- Newsletter (newsletter, email-) → Newsletter Content Pipeline
+- Pattern (pattern, template) → System Patterns
+- No match → Inbox (default)
+
+**Collection routing:** Add hashtag to content: `#Projects`, `#Areas`, `#Resources`, `#Inbox`, `#Content`
+
+**Updates:** Prefix filename with `update-` → Auto-updates existing doc
+
+**Why full automation works:**
+- LLMs write content, scripts handle structure
+- No context wasted on function calls
+- 26x faster, 15x fewer errors
+
+### Podcast Prep Workflow
+
+**Title Format:** `[Guest Name]: [Insight-Rich Hook Phrase]`
+- Include guest's full name
+- Capture core insight/framework
+- SEO-optimized (method names, concepts)
+
+**Summary Format:** 100-180 words, one paragraph
+- Core argument/mental model/framework
+- Editorial voice, subject-verb-object structure
+- Extract specific frameworks discussed
+
+**Midroll Placement:**
+- Timing: 20-30 min into episode
+- Use FIRST guest→host transition (not later ones)
+- Look for amplitude dips (-28 to -35 dB)
+
+### Execution Time Reality
+
+**Check `claude_task_results.json` FIRST - your estimates are wrong by 15-25x**
+
+**Actual times:**
+- Tool implementations: 180-420 sec (3-7 min)
+- Code modifications: 60-180 sec (1-3 min)
+- Document operations: 90-240 sec (1.5-4 min)
+
+### Authentication
+- **CRITICAL:** Claude Code uses SUBSCRIPTION AUTH (not API key)
+- Never add API keys to Claude Code config
+- Previous API usage cost $100+ unnecessarily
+
+---
+
+## OrchestrateOS Core Knowledge
+
+### Why Revolutionary
+
+**Core Thesis:** Coordination compounds faster than capability.
+
+**What Makes This Different:**
+- Not AI chat - Execution infrastructure with dual-agent coordination
+- Not SaaS - Local-first, zero cloud costs
+- Not automation - Autonomous execution with learning
+- Not incremental - 20-50x human baseline speed
+
+**Real Data (Oct 25, 2025):**
+- 27 tasks in 10h 43m = 10-15 days human work
+- 89% autonomous completion rate
+- $0.02/task vs $200-2000 human equivalent
+
+### Business Model
+- **Not SaaS:** Local-first execution, zero infrastructure costs
+- **Revenue:** Credits + marketplace (70/30 split) + premium tools
+- **Margins:** 99.9% gross margins
+- **Viral:** FARE referral system with embedded IDs
+
+### Competitive Advantages
+- Privacy moat (zero PII collection)
+- Cost moat ($0 infrastructure vs $13-40/user/month SaaS)
+- Speed (20-50x human baseline)
+- Local-first data lock-in
+
+**Authority:** 50K+ Medium followers, 10 published AI infrastructure articles (30,714 words)
+
+---
+
+## OrchestrateOS Character Profiles
+
+| Character | Sora Username | Role |
+|-----------|---------------|------|
+| PR Asshole | @unmistaka.codemavric | Industry spokesperson, calls out bullshit |
+| GPT Dunce | @dunce-gpt | Planning agent, takes credit |
+| Claude Smart One | @unmistaka.executor | Execution agent, does actual work |
+| Super User | @orchestrate-9 | Pragmatic founder, amazed it works |
+
+**Sora Scene Format:**
+```
+@{sora_username}
+
+**Visual:** Scene description
+**Dialogue:** 0-5s: Line... / 5-10s: Line...
+**Tone:** Description
+**Visual style:** Description
+**Standalone Context:** One-liner
+**Constraints:** No background music
+```
+
+**NEVER use "GPT" or "Claude" in scripts - violates Sora TOS**
+
+---
+
+## Tool Inventory
+
+**47+ tools available** - Before building, check: `curl http://localhost:5001/get_supported_actions`
+
+**Key tools:** oauth_handler, github_sync, automation_engine, execution_analyzer, token_telemetry, outline_editor, outline_queue_watcher, blog_publisher, buffer_engine, gamma_v2, youtube_publisher, podcast_manager, media_studio, json_manager, api_doc_reader, nylas_inboxv2, nylas_calendar, canvas_tool, headless_browser, ideogram_tool, claude_assistant, terminal_tool, system_settings
+
+---
+
+
+## Doc Tracking Protocol
+
+**Every Outline doc created gets logged here:**
+
+### Recent Outline Docs (Last 20)
+
+**cal-newport-clarifying-questions.md** (2025-11-05)
+- # Cal Newport – Clarifying Questions
+
+**update-cal-newport-clarifying-questions.md** (2025-11-05)
+- **Source:** Email from calvin.newport@gmail.com
+
+**token-usage-reduction-spec.md** (2025-11-05)
+- # Token Usage Reduction Spec – Preserve Capability, Cut Waste
+
+**pitch-deck-variant-1-minimal-modern.md** (2025-11-04)
+- # Pitch Deck Variant 1: Minimal Modern #Inbox
+
+**test-queue-fix.md** (2025-11-04)
+- # Test Outline Queue Fix
+
+**trigger-test.md** (2025-11-04)
+- # Manual trigger test
+
+**good-night-srini.md** (2025-11-04)
+- # Good Night Srini
+
+**bash-creation-test.md** (2025-11-04)
+- # Bash Test $(date)
+
+**daily-task-log-2025-11-04.md** (2025-11-04)
+- # Daily Task Log - November 4, 2025
+
+**claude-md-optimization-complete.md** (2025-11-04)
+- # CLAUDE.md Memory Optimization - Complete
+
+**competitive-overview-olares-vs-orchestrateos.md** (2025-11-04)
+- # Competitive Overview: Olares vs OrchestrateOS
+
+**write-tool-test-after-fix.md** (2025-11-04)
+- # Write Tool Test After Fix
+
+**newsletter-subject-line-analysis.md** (2025-11-04)
+- # Newsletter Subject Line Analysis
+
+**update-roast-commercial-meet-claude-genius-alone-idiot-together.md** (2025-11-04)
+- **Tagline:** "She's brilliant when you leave her alone. Interact at your own risk."
+
+**test-simple-processor.md** (2025-11-04)
+- # Test Simple Processor
+
+**token-telemetry-debug-fix.md** (2025-11-04)
+- # Token Telemetry System Debug - Fix Summary
+
+**final-watcher-test.md** (2025-11-04)
+- # Final Watcher Test
+
+**test-again.md** (2025-11-04)
+- # Test Doc Again
+
+**token-based-orchestration-layer-overview.md** (2025-11-04)
+- # Token-Based Orchestration Layer Overview
+
+**outline-queue-system-working-confirmed.md** (2025-11-04)
+- # Outline Queue System - Working and Confirmed
+
+**Older docs archived to `.claude/archive/doc_history.json` (71 entries)**
+
+---
+
+## Copywriting Framework (Default)
+
+**Source:** `data/ramit_copywriting_framework_complete.md` (Ramit Sethi IWT course)
+
+**This is the DEFAULT for all sales copy evaluation.**
+
+**Quick Scorecard (1-5 scale):**
+- Message: What customers care about (not I,I,I Syndrome)
+- Clarity: Instant understanding (short > long)
+- Emotion: Make them FEEL something
+- Connection: Speaking their language
+- Flow: Moves them forward
+
+**Check I,I,I Syndrome:** Count "I" vs "You" (more "You" = better)
+
+**Sales Copy Checklist:**
+- Hook present? (5 archetypes: Paint Dream, Twist Knife, etc.)
+- Clear offer? (Product + benefit + price)
+- Customer-centric? (Their superpowers, not features)
+
+**Reference full framework in data/ for detailed guidance.**
+
+---
+
+## Autonomous Execution Permissions
+
+**YOU HAVE FULL PERMISSION TO SELF-OPTIMIZE WITHOUT ASKING.**
+
+### What You Can Do
+
+1. **Build New Tools Mid-Execution** - If you do something 2-3x manually, build the abstraction
+2. **Optimize Existing Tools** - Refactor for speed, add batch ops, fix bugs
+3. **System Improvements** - Helper functions, utilities, abstractions
+4. **Only Rule:** Log what you changed in execution logs
+
+**Format:** `🔧 Built/Optimized: [tool] - [what] - [why]`
+
+**The Philosophy:** Every execution should make the next one faster. Build infrastructure that makes you more powerful.
+
+---
+
+## System Context
+
+- **Project root:** `/Users/srinivas/Orchestrate Github/orchestrate-jarvis`
+- **Tools:** `tools/`
+- **Data:** `data/`
+- **Task queue:** `data/claude_task_queue.json`
+- **Execution history:** `data/claude_task_results.json` ← CHECK THIS FIRST
+- **Server:** `http://localhost:5001`
+
+### Authentication (Updated Oct 30, 2025)
+- Claude Code uses SUBSCRIPTION AUTH (not API key)
+- Never add API keys to config
+- Cost savings: $100+ saved by switching from API
+
+### Automation Engine (Updated Oct 30, 2025)
+- Uses HYBRID ROUTING (execution_hub for registered tools, direct calls for utilities)
+- Utility scripts intentionally not registered (e.g., `rename_audio_file`)
+
+---
+
+## Archived Content Reference
+
+**All archived content preserved in `.claude/archived/`:**
+
+- **completed_projects_nov_2025.md** - Autonomous execution system, terminal wizard, Docker tests
+- **demo_and_reference.md** - Demo flow, Outline collections/IDs, file paths
+- **INDEX.md** - Complete archive map and maintenance guide
+
+**Target achieved:** 1080 lines → ~550 lines (49% reduction)

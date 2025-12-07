@@ -1,0 +1,41 @@
+{
+  "module": "podcast",
+  "token_count_estimate": 3000,
+  "triggers": ["podcast", "audio", "episode", "guest", "midroll", "transcript"],
+  "patterns": {
+    "title_format": {
+      "structure": "[Guest Name]: [Insight-Rich Hook Phrase]",
+      "requirements": [
+        "Include guest's full name",
+        "Capture core insight/framework",
+        "SEO-optimized (method names, concepts)"
+      ]
+    },
+    "summary_format": {
+      "length": "100-180 words",
+      "style": "One paragraph",
+      "content": [
+        "Core argument/mental model/framework",
+        "Editorial voice",
+        "Subject-verb-object structure",
+        "Extract specific frameworks discussed"
+      ]
+    },
+    "midroll_placement": {
+      "timing": "20-30 min into episode",
+      "trigger": "FIRST guest→host transition (not later ones)",
+      "amplitude": "Look for dips (-28 to -35 dB)"
+    }
+  },
+  "tool_actions": [
+    "podcast_manager.process_episode",
+    "podcast_manager.generate_summary",
+    "podcast_manager.place_midroll",
+    "media_studio.analyze_audio"
+  ],
+  "file_paths": {
+    "audio_dir": "data/audio/",
+    "transcripts": "data/transcripts/",
+    "processed": "data/podcasts/processed/"
+  }
+}

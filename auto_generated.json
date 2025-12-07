@@ -1,0 +1,30 @@
+[
+  {
+    "url": "https://developers.kit.com/api-reference/accounts/get-current-account",
+    "output_name": "convertkit_get-current-account"
+  },
+  {
+    "url": "https://developers.kit.com/api-reference/broadcasts/create-a-broadcast",
+    "output_name": "convertkit_create-a-broadcast"
+  },
+  {
+    "url": "https://developers.kit.com/api-reference/broadcasts/get-stats-for-a-list-of-broadcasts",
+    "output_name": "convertkit_get-stats-for-a-list-of-broadcasts"
+  },
+  {
+    "url": "https://developers.kit.com/api-reference/broadcasts/get-stats-for-a-broadcast",
+    "output_name": "convertkit_get-stats-for-a-broadcast"
+  },
+  {
+    "url": "https://developers.kit.com/api-reference/broadcasts/delete-a-broadcast",
+    "output_name": "convertkit_delete-a-broadcast"
+  },
+  {
+    "url": "https://developers.kit.com/api-reference/accounts/get-growth-stats",
+    "output_name": "convertkit_get-growth-stats"
+  },
+  {
+    "url": "https://developers.kit.com/api-reference/accounts/get-email-stats",
+    "output_name": "convertkit_get-email-stats"
+  }
+]

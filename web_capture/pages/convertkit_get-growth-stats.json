@@ -1,0 +1,37 @@
+{
+  "url": "https://developers.kit.com/api-reference/accounts/get-growth-stats",
+  "title": "Kit Developer Documentation",
+  "method": "GET",
+  "endpoint": "/v4/account/growth_stats",
+  "headings": [
+    "Get growth stats"
+  ],
+  "parameters": [
+    "cancellations",
+    "ending",
+    "net_new_subscribers",
+    "new_subscribers",
+    "starting",
+    "stats",
+    "subscribers"
+  ],
+  "curl_examples": [
+    "curl --request GET \\\n  --url https://api.kit.com/v4/account/growth_stats \\\n  --header 'X-Kit-Api-Key: <api-key>'"
+  ],
+  "json_examples": [
+    {
+      "stats": {
+        "cancellations": 0,
+        "net_new_subscribers": 3,
+        "new_subscribers": 3,
+        "subscribers": 3,
+        "starting": "2023-02-10T00:00:00-05:00",
+        "ending": "2023-02-24T23:59:59-05:00"
+      }
+    }
+  ],
+  "all_code_blocks": [
+    "curl --request GET \\\n  --url https://api.kit.com/v4/account/growth_stats \\\n  --header 'X-Kit-Api-Key: <api-key>'",
+    "{\n  \"stats\": {\n    \"cancellations\": 0,\n    \"net_new_subscribers\": 3,\n    \"new_subscribers\": 3,\n    \"subscribers\": 3,\n    \"starting\": \"2023-02-10T00:00:00-05:00\",\n    \"ending\": \"2023-02-24T23:59:59-05:00\"\n  }\n}"
+  ]
+}

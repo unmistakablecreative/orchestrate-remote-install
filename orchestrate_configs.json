@@ -1,0 +1,96 @@
+{
+  "tools": {
+    "outline_editor": {
+      "functions": {
+        "create_doc": {
+          "endpoint": "/documents.create",
+          "method": "POST"
+        },
+        "create_child_doc": {
+          "endpoint": "/documents.create",
+          "method": "POST"
+        },
+        "get_doc": {
+          "endpoint": "/documents.info",
+          "method": "POST"
+        },
+        "update_doc": {
+          "endpoint": "/documents.update",
+          "method": "POST"
+        },
+        "delete_doc": {
+          "endpoint": "/documents.delete",
+          "method": "POST"
+        },
+        "restore_doc": {
+          "endpoint": "/documents.restore",
+          "method": "POST"
+        },
+        "list_docs": {
+          "endpoint": "/documents.list",
+          "method": "POST"
+        },
+        "search_docs": {
+          "endpoint": "/documents.search",
+          "method": "POST"
+        },
+        "export_doc": {
+          "endpoint": "/documents.export",
+          "method": "POST"
+        },
+        "import_doc_from_file": {
+          "endpoint": "/documents.import",
+          "method": "POST"
+        },
+        "move_doc": {
+          "endpoint": "/documents.move",
+          "method": "POST"
+        },
+        "create_share_link": {
+          "endpoint": "/shares.create",
+          "method": "POST"
+        },
+        "create_collection": {
+          "endpoint": "/collections.create",
+          "method": "POST"
+        },
+        "get_collection": {
+          "endpoint": "/collections.info",
+          "method": "POST"
+        },
+        "update_collection": {
+          "endpoint": "/collections.update",
+          "method": "POST"
+        },
+        "delete_collection": {
+          "endpoint": "/collections.delete",
+          "method": "POST"
+        },
+        "get_nested_doc": {
+          "endpoint": "/documents.info",
+          "method": "POST"
+        },
+        "list_collection_docs": {
+          "endpoint": "/documents.list",
+          "method": "POST"
+        },
+        "get_doc_comments": {
+          "endpoint": "/comments.list",
+          "method": "POST"
+        },
+        "delete_comment": {
+          "endpoint": "/comments.delete",
+          "method": "POST"
+        },
+        "sync_doc_index": {
+          "endpoint": "/documents.list",
+          "method": "POST"
+        }
+      },
+      "api_base": "https://app.getoutline.com/api",
+      "auth_header": "Authorization",
+      "auth_format": "Bearer {token}",
+      "credential_key": "outline_api_key"
+    }
+  }
+}

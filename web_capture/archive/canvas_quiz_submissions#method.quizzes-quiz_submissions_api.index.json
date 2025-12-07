@@ -1,0 +1,135 @@
+{
+  "url": "https://developerdocs.instructure.com/services/canvas/resources/quiz_submissions#method.quizzes-quiz_submissions_api.index",
+  "title": "Quiz Submissions | Instructure Developer Documentation Portal",
+  "method": "GET",
+  "endpoint": "Started",
+  "headings": [
+    "Quiz Submissions",
+    "Quiz Submissions API",
+    "Get all quiz submissions.",
+    "Get the quiz submission.",
+    "Get a single quiz submission.",
+    "Create the quiz submission (start a quiz-taking session)",
+    "Update student question scores and comments.",
+    "Complete the quiz submission (turn it in).",
+    "Get current quiz submission times.",
+    "Appendixes"
+  ],
+  "parameters": [
+    "QUESTION_ID",
+    "Type",
+    "attempt",
+    "comment",
+    "end_at",
+    "extra_attempts",
+    "extra_time",
+    "finished_at",
+    "fudge_points",
+    "has_seen_results",
+    "is",
+    "kept_score",
+    "manually_unlocked",
+    "overdue_and_needs_submission",
+    "questions",
+    "quiz_id",
+    "quiz_submissions",
+    "score",
+    "score_before_regrade",
+    "specifies",
+    "started_at",
+    "submission_id",
+    "synopsis",
+    "time_left",
+    "time_spent",
+    "user_id",
+    "workflow_state"
+  ],
+  "curl_examples": [],
+  "json_examples": [
+    "{\n\n  // The ID of the quiz submission.\n\n  \"id\": 1,\n\n  // The ID of the Quiz the quiz submission belongs to.\n\n  \"quiz_id\": 2,\n\n  // The ID of the Student that made the quiz submission.\n\n  \"user_id\": 3,\n\n  // The ID of the Submission the quiz submission represents.\n\n  \"submission_id\": 1,\n\n  // The time at which the student started the quiz submission.\n\n  \"started_at\": \"2013-11-07T13:16:18Z\",\n\n  // The time at which the student submitted the quiz submission.\n\n  \"finished_at\": \"2013-11-07T13:16:18Z\",\n\n  // The time at which the quiz submission will be overdue, and be flagged as a\n\n  // late submission.\n\n  \"end_at\": \"2013-11-07T13:16:18Z\",\n\n  // For quizzes that allow multiple attempts, this field specifies the quiz\n\n  // submission attempt number.\n\n  \"attempt\": 3,\n\n  // Number of times the student was allowed to re-take the quiz over the\n\n  // multiple-attempt limit.\n\n  \"extra_attempts\": 1,\n\n  // Amount of extra time allowed for the quiz submission, in minutes.\n\n  \"extra_time\": 60,\n\n  // The student can take the quiz even if it's locked for everyone else\n\n  \"manually_unlocked\": true,\n\n  // Amount of time spent, in seconds.\n\n  \"time_spent\": 300,\n\n  // The score of the quiz submission, if graded.\n\n  \"score\": 3,\n\n  // The original score of the quiz submission prior to any re-grading.\n\n  \"score_before_regrade\": 2,\n\n  // For quizzes that allow multiple attempts, this is the score that will be\n\n  // used, which might be the score of the latest, or the highest, quiz\n\n  // submission.\n\n  \"kept_score\": 5,\n\n  // Number of points the quiz submission's score was fudged by.\n\n  \"fudge_points\": 1,\n\n  // Whether the student has viewed their results to the quiz.\n\n  \"has_seen_results\": true,\n\n  // The current state of the quiz submission. Possible values:\n\n  // ['untaken'|'pending_review'|'complete'|'settings_only'|'preview'].\n\n  \"workflow_state\": \"untaken\",\n\n  // Indicates whether the quiz submission is overdue and needs submission\n\n  \"overdue_and_needs_submission\": false\n\n}",
+    {
+      "quiz_submissions": [
+        {
+          "attempt": 1,
+          "fudge_points": -2.4,
+          "questions": {
+            "1": {
+              "score": 2.5,
+              "comment": "This can't be right, but I'll let it pass this one time."
+            },
+            "2": {
+              "score": 0,
+              "comment": "Good thinking. Almost!"
+            }
+          }
+        }
+      ]
+    },
+    "{\n\n  \"end_at\": [DateTime],\n\n  \"time_left\": [Integer]\n\n}",
+    "{\n\n  \"quiz_submissions\": [{\n\n    \"fudge_points\": null, // null for no change, or a signed decimal\n\n    \"questions\": {\n\n      \"QUESTION_ID\": {\n\n        \"score\": null, // null for no change, or an unsigned decimal\n\n        \"comment\": null // null for no change, '' for no comment, or a string\n\n      }\n\n    }\n\n  }]\n\n}",
+    {
+      "quiz_submissions": [
+        {
+          "attempt": 1,
+          "fudge_points": -2.4
+        }
+      ]
+    },
+    {
+      "quiz_submissions": [
+        {
+          "attempt": 1,
+          "questions": {
+            "1": {
+              "comment": ""
+            }
+          }
+        }
+      ]
+    },
+    {
+      "1": {
+        "score": 2.5,
+        "comment": "This can't be right, but I'll let it pass this one time."
+      },
+      "2": {
+        "score": 0,
+        "comment": "Good thinking. Almost!"
+      }
+    },
+    "{\n\n      \"QUESTION_ID\": {\n\n        \"score\": null, // null for no change, or an unsigned decimal\n\n        \"comment\": null // null for no change, '' for no comment, or a string\n\n      }\n\n    }",
+    {
+      "1": {
+        "comment": ""
+      }
+    }
+  ],
+  "all_code_blocks": [
+    "{\n\n  // The ID of the quiz submission.\n\n  \"id\": 1,\n\n  // The ID of the Quiz the quiz submission belongs to.\n\n  \"quiz_id\": 2,\n\n  // The ID of the Student that made the quiz submission.\n\n  \"user_id\": 3,\n\n  // The ID of the Submission the quiz submission represents.\n\n  \"submission_id\": 1,\n\n  // The time at which the student started the quiz submission.\n\n  \"started_at\": \"2013-11-07T13:16:18Z\",\n\n  // The time at which the student submitted the quiz submission.\n\n  \"finished_at\": \"2013-11-07T13:16:18Z\",\n\n  // The time at which the quiz submission will be overdue, and be flagged as a\n\n  // late submission.\n\n  \"end_at\": \"2013-11-07T13:16:18Z\",\n\n  // For quizzes that allow multiple attempts, this field specifies the quiz\n\n  // submission attempt number.\n\n  \"attempt\": 3,\n\n  // Number of times the student was allowed to re-take the quiz over the\n\n  // multiple-attempt limit.\n\n  \"extra_attempts\": 1,\n\n  // Amount of extra time allowed for the quiz submission, in minutes.\n\n  \"extra_time\": 60,\n\n  // The student can take the quiz even if it's locked for everyone else\n\n  \"manually_unlocked\": true,\n\n  // Amount of time spent, in seconds.\n\n  \"time_spent\": 300,\n\n  // The score of the quiz submission, if graded.\n\n  \"score\": 3,\n\n  // The original score of the quiz submission prior to any re-grading.\n\n  \"score_before_regrade\": 2,\n\n  // For quizzes that allow multiple attempts, this is the score that will be\n\n  // used, which might be the score of the latest, or the highest, quiz\n\n  // submission.\n\n  \"kept_score\": 5,\n\n  // Number of points the quiz submission's score was fudged by.\n\n  \"fudge_points\": 1,\n\n  // Whether the student has viewed their results to the quiz.\n\n  \"has_seen_results\": true,\n\n  // The current state of the quiz submission. Possible values:\n\n  // ['untaken'|'pending_review'|'complete'|'settings_only'|'preview'].\n\n  \"workflow_state\": \"untaken\",\n\n  // Indicates whether the quiz submission is overdue and needs submission\n\n  \"overdue_and_needs_submission\": false\n\n}",
+    "{\n\n  \"quiz_submissions\": [QuizSubmission]\n\n}",
+    "{\n\n  \"quiz_submissions\": [{\n\n    \"attempt\": 1,\n\n    \"fudge_points\": -2.4,\n\n    \"questions\": {\n\n      \"1\": {\n\n        \"score\": 2.5,\n\n        \"comment\": \"This can't be right, but I'll let it pass this one time.\"\n\n      },\n\n      \"2\": {\n\n        \"score\": 0,\n\n        \"comment\": \"Good thinking. Almost!\"\n\n      }\n\n    }\n\n  }]\n\n}",
+    "{\n\n  \"end_at\": [DateTime],\n\n  \"time_left\": [Integer]\n\n}",
+    "{\n\n  \"quiz_submissions\": [{\n\n    \"fudge_points\": null, // null for no change, or a signed decimal\n\n    \"questions\": {\n\n      \"QUESTION_ID\": {\n\n        \"score\": null, // null for no change, or an unsigned decimal\n\n        \"comment\": null // null for no change, '' for no comment, or a string\n\n      }\n\n    }\n\n  }]\n\n}",
+    "{\n\n  \"quiz_submissions\": [{\n\n    \"attempt\": 1,\n\n    \"fudge_points\": -2.4\n\n  }]\n\n}",
+    "{\n\n  \"quiz_submissions\": [{\n\n    \"attempt\": 1,\n\n    \"questions\": {\n\n      \"1\": {\n\n        \"comment\": \"\"\n\n      }\n\n    }\n\n  }]\n\n}",
+    "GET /api/v1/courses/:course_id/quizzes/:quiz_id/submissions",
+    "url:GET|/api/v1/courses/:course_id/quizzes/:quiz_id/submissions",
+    "GET /api/v1/courses/:course_id/quizzes/:quiz_id/submission",
+    "url:GET|/api/v1/courses/:course_id/quizzes/:quiz_id/submission",
+    "GET /api/v1/courses/:course_id/quizzes/:quiz_id/submissions/:id",
+    "url:GET|/api/v1/courses/:course_id/quizzes/:quiz_id/submissions/:id",
+    "POST /api/v1/courses/:course_id/quizzes/:quiz_id/submissions",
+    "url:POST|/api/v1/courses/:course_id/quizzes/:quiz_id/submissions",
+    "access_code",
+    "PUT /api/v1/courses/:course_id/quizzes/:quiz_id/submissions/:id",
+    "url:PUT|/api/v1/courses/:course_id/quizzes/:quiz_id/submissions/:id",
+    "quiz_submissions[][attempt]",
+    "quiz_submissions[][fudge_points]",
+    "quiz_submissions[][questions]",
+    "POST /api/v1/courses/:course_id/quizzes/:quiz_id/submissions/:id/complete",
+    "url:POST|/api/v1/courses/:course_id/quizzes/:quiz_id/submissions/:id/complete",
+    "validation_token",
+    "GET /api/v1/courses/:course_id/quizzes/:quiz_id/submissions/:id/time",
+    "url:GET|/api/v1/courses/:course_id/quizzes/:quiz_id/submissions/:id/time"
+  ]
+}

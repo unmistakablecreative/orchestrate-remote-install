@@ -1,0 +1,1199 @@
+{
+  "company_name": "test_api",
+  "collection_name": "Airtable Web API",
+  "description": "The Airtable API can be used to integrate your data in Airtable with any external system. The API closely follows REST semantics, uses JSON to encode objects, and relies on standard HTTP codes to signal operation outcomes.\n\nPlease see [https://airtable.com/developers/web/api/introduction](https://airtable.com/developers/web/api/introduction) for more details.\n\nTo get started, you'll need to generate a personal access token. There are two ways to do that in Airtable:\n\n1. [https://airtable.com/create/tokens](https://airtable.com/create/tokens) to create a token in Builder Hub. This token is associated to your Airtable user account. Recommended for testing and personal use.\n    \n2. For Business & Enterprise customers, it's recommended admins create a [service account](https://support.airtable.com/docs/service-accounts-overview) (system user) in the admin panel and a personal access token there.\n    \n\nMake sure to account for what [scopes](https://airtable.com/developers/web/api/scopes) each endpoint requires.\n\nAfter generating your token, update the Variables tab.",
+  "actions": [
+    {
+      "action": "delete_delete_base",
+      "method": "DELETE",
+      "endpoint": "/v0/meta/bases/:baseId",
+      "params": [
+        "baseId"
+      ],
+      "description": "Delete base",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_move_workspaces",
+      "method": "POST",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/moveWorkspaces",
+      "params": [
+        "enterpriseAccountId",
+        "replacementOwnerId",
+        "targetEnterpriseAccountId",
+        "workspaceIds"
+      ],
+      "description": "Move workspaces",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_workspace",
+      "method": "DELETE",
+      "endpoint": "/v0/meta/workspaces/:workspaceId",
+      "params": [
+        "workspaceId"
+      ],
+      "description": "Delete workspace",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_move_base",
+      "method": "POST",
+      "endpoint": "/v0/meta/workspaces/:workspaceId/moveBase",
+      "params": [
+        "baseId",
+        "targetIndex",
+        "targetWorkspaceId",
+        "workspaceId"
+      ],
+      "description": "Move base",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_update_workspace_restrictions",
+      "method": "POST",
+      "endpoint": "/v0/meta/workspaces/:workspaceId/updateRestrictions",
+      "params": [
+        "inviteCreationRestriction",
+        "shareCreationRestriction",
+        "workspaceId"
+      ],
+      "description": "Update workspace restrictions",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_list_bases",
+      "method": "GET",
+      "endpoint": "/v0/meta/bases?offset={value}",
+      "params": [
+        "offset"
+      ],
+      "description": "List bases",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_create_base",
+      "method": "POST",
+      "endpoint": "/v0/meta/bases",
+      "params": [
+        "name",
+        "tables",
+        "workspaceId"
+      ],
+      "description": "Create base",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_base_schema",
+      "method": "GET",
+      "endpoint": "/v0/meta/bases/:baseId/tables?include={value}&include={value}",
+      "params": [
+        "baseId",
+        "include"
+      ],
+      "description": "Get base schema",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_create_table",
+      "method": "POST",
+      "endpoint": "/v0/meta/bases/:baseId/tables",
+      "params": [
+        "baseId",
+        "description",
+        "fields",
+        "name"
+      ],
+      "description": "Create table",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_update_table",
+      "method": "PATCH",
+      "endpoint": "/v0/meta/bases/:baseId/tables/:tableIdOrName",
+      "params": [
+        "baseId",
+        "dateDependencySettings",
+        "description",
+        "name",
+        "tableIdOrName"
+      ],
+      "description": "Update table",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_upload_attachment",
+      "method": "POST",
+      "endpoint": "/v0/:baseId/:recordId/:attachmentFieldIdOrName/uploadAttachment",
+      "params": [
+        "attachmentFieldIdOrName",
+        "baseId",
+        "contentType",
+        "file",
+        "filename",
+        "recordId"
+      ],
+      "description": "Upload attachment",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_multiple_records",
+      "method": "DELETE",
+      "endpoint": "/v0/:baseId/:tableIdOrName?records={value}&records={value}",
+      "params": [
+        "baseId",
+        "records",
+        "tableIdOrName"
+      ],
+      "description": "Delete multiple records",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_list_records",
+      "method": "GET",
+      "endpoint": "/v0/:baseId/:tableIdOrName?timeZone={value}&userLocale={value}&pageSize={value}&maxRecords={value}&offset={value}&view={value}&sort={value}&sort={value}&filterByFormula={value}&cellFormat={value}&fields={value}&fields={value}&returnFieldsByFieldId={value}&recordMetadata={value}&recordMetadata={value}",
+      "params": [
+        "baseId",
+        "cellFormat",
+        "fields",
+        "filterByFormula",
+        "maxRecords",
+        "offset",
+        "pageSize",
+        "recordMetadata",
+        "returnFieldsByFieldId",
+        "sort",
+        "tableIdOrName",
+        "timeZone",
+        "userLocale",
+        "view"
+      ],
+      "description": "List records",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_update_multiple_records",
+      "method": "PATCH",
+      "endpoint": "/v0/:baseId/:tableIdOrName",
+      "params": [
+        "baseId",
+        "performUpsert",
+        "records",
+        "returnFieldsByFieldId",
+        "tableIdOrName",
+        "typecast"
+      ],
+      "description": "Update multiple records",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_create_records",
+      "method": "POST",
+      "endpoint": "/v0/:baseId/:tableIdOrName",
+      "params": [
+        "baseId",
+        "fields",
+        "records",
+        "returnFieldsByFieldId",
+        "tableIdOrName",
+        "typecast"
+      ],
+      "description": "Create records",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_sync_csv_data",
+      "method": "POST",
+      "endpoint": "/v0/:baseId/:tableIdOrName/sync/:apiEndpointSyncId",
+      "params": [
+        "apiEndpointSyncId",
+        "baseId",
+        "tableIdOrName"
+      ],
+      "description": "Sync CSV data",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_record",
+      "method": "DELETE",
+      "endpoint": "/v0/:baseId/:tableIdOrName/:recordId",
+      "params": [
+        "baseId",
+        "recordId",
+        "tableIdOrName"
+      ],
+      "description": "Delete record",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_record",
+      "method": "GET",
+      "endpoint": "/v0/:baseId/:tableIdOrName/:recordId?cellFormat={value}&returnFieldsByFieldId={value}",
+      "params": [
+        "baseId",
+        "cellFormat",
+        "recordId",
+        "returnFieldsByFieldId",
+        "tableIdOrName"
+      ],
+      "description": "Get record",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_update_record",
+      "method": "PATCH",
+      "endpoint": "/v0/:baseId/:tableIdOrName/:recordId",
+      "params": [
+        "baseId",
+        "fields",
+        "recordId",
+        "returnFieldsByFieldId",
+        "tableIdOrName",
+        "typecast"
+      ],
+      "description": "Update record",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_read_cell_history_redactions",
+      "method": "GET",
+      "endpoint": "/v0/:baseId/:tableIdOrName/:recordId/redactions?tableId={value}&pageSize={value}&offset={value}",
+      "params": [
+        "baseId",
+        "offset",
+        "pageSize",
+        "recordId",
+        "tableId",
+        "tableIdOrName"
+      ],
+      "description": "Read cell history redactions",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_redact_history",
+      "method": "POST",
+      "endpoint": "/v0/:baseId/:tableIdOrName/:recordId/redactions",
+      "params": [
+        "baseId",
+        "fields",
+        "options",
+        "recordId",
+        "tableId",
+        "tableIdOrName"
+      ],
+      "description": "Redact history",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_cell_history_redaction",
+      "method": "DELETE",
+      "endpoint": "/v0/:baseId/:tableIdOrName/:recordId/redactions/:cellHistoryRedactionId?tableId={value}",
+      "params": [
+        "baseId",
+        "cellHistoryRedactionId",
+        "recordId",
+        "tableId",
+        "tableIdOrName"
+      ],
+      "description": "Delete cell history redaction",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_create_field",
+      "method": "POST",
+      "endpoint": "/v0/meta/bases/:baseId/tables/:tableId/fields",
+      "params": [
+        "baseId",
+        "description",
+        "name",
+        "tableId",
+        "type"
+      ],
+      "description": "Create field",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_update_field",
+      "method": "PATCH",
+      "endpoint": "/v0/meta/bases/:baseId/tables/:tableId/fields/:columnId",
+      "params": [
+        "baseId",
+        "columnId",
+        "description",
+        "name",
+        "tableId"
+      ],
+      "description": "Update field",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_list_views",
+      "method": "GET",
+      "endpoint": "/v0/meta/bases/:baseId/views?include={value}&include={value}",
+      "params": [
+        "baseId",
+        "include"
+      ],
+      "description": "List views",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_view",
+      "method": "DELETE",
+      "endpoint": "/v0/meta/bases/:baseId/views/:viewId",
+      "params": [
+        "baseId",
+        "viewId"
+      ],
+      "description": "Delete view",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_view_metadata",
+      "method": "GET",
+      "endpoint": "/v0/meta/bases/:baseId/views/:viewId?include={value}&include={value}",
+      "params": [
+        "baseId",
+        "include",
+        "viewId"
+      ],
+      "description": "Get view metadata",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_list_comments",
+      "method": "GET",
+      "endpoint": "/v0/:baseId/:tableIdOrName/:recordId/comments?pageSize={value}&offset={value}",
+      "params": [
+        "baseId",
+        "offset",
+        "pageSize",
+        "recordId",
+        "tableIdOrName"
+      ],
+      "description": "List comments",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_create_comment",
+      "method": "POST",
+      "endpoint": "/v0/:baseId/:tableIdOrName/:recordId/comments",
+      "params": [
+        "baseId",
+        "parentCommentId",
+        "recordId",
+        "tableIdOrName",
+        "text"
+      ],
+      "description": "Create comment",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_comment",
+      "method": "DELETE",
+      "endpoint": "/v0/:baseId/:tableIdOrName/:recordId/comments/:rowCommentId",
+      "params": [
+        "baseId",
+        "recordId",
+        "rowCommentId",
+        "tableIdOrName"
+      ],
+      "description": "Delete comment",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_update_comment",
+      "method": "PATCH",
+      "endpoint": "/v0/:baseId/:tableIdOrName/:recordId/comments/:rowCommentId",
+      "params": [
+        "baseId",
+        "recordId",
+        "rowCommentId",
+        "tableIdOrName",
+        "text"
+      ],
+      "description": "Update comment",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_base_collaborators",
+      "method": "GET",
+      "endpoint": "/v0/meta/bases/:baseId?include={value}&include={value}",
+      "params": [
+        "baseId",
+        "include"
+      ],
+      "description": "Get base collaborators",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_add_base_collaborator",
+      "method": "POST",
+      "endpoint": "/v0/meta/bases/:baseId/collaborators",
+      "params": [
+        "baseId",
+        "collaborators"
+      ],
+      "description": "Add base collaborator",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_base_collaborator",
+      "method": "DELETE",
+      "endpoint": "/v0/meta/bases/:baseId/collaborators/:userOrGroupId",
+      "params": [
+        "baseId",
+        "userOrGroupId"
+      ],
+      "description": "Delete base collaborator",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_update_collaborator_base_permission",
+      "method": "PATCH",
+      "endpoint": "/v0/meta/bases/:baseId/collaborators/:userOrGroupId",
+      "params": [
+        "baseId",
+        "permissionLevel",
+        "userOrGroupId"
+      ],
+      "description": "Update collaborator base permission",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_interface",
+      "method": "GET",
+      "endpoint": "/v0/meta/bases/:baseId/interfaces/:pageBundleId?include={value}&include={value}",
+      "params": [
+        "baseId",
+        "include",
+        "pageBundleId"
+      ],
+      "description": "Get interface",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_add_interface_collaborator",
+      "method": "POST",
+      "endpoint": "/v0/meta/bases/:baseId/interfaces/:pageBundleId/collaborators",
+      "params": [
+        "baseId",
+        "collaborators",
+        "pageBundleId"
+      ],
+      "description": "Add interface collaborator",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_interface_collaborator",
+      "method": "DELETE",
+      "endpoint": "/v0/meta/bases/:baseId/interfaces/:pageBundleId/collaborators/:userOrGroupId",
+      "params": [
+        "baseId",
+        "pageBundleId",
+        "userOrGroupId"
+      ],
+      "description": "Delete interface collaborator",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_update_interface_collaborator",
+      "method": "PATCH",
+      "endpoint": "/v0/meta/bases/:baseId/interfaces/:pageBundleId/collaborators/:userOrGroupId",
+      "params": [
+        "baseId",
+        "pageBundleId",
+        "permissionLevel",
+        "userOrGroupId"
+      ],
+      "description": "Update interface collaborator",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_workspace_collaborators",
+      "method": "GET",
+      "endpoint": "/v0/meta/workspaces/:workspaceId?include={value}&include={value}",
+      "params": [
+        "include",
+        "workspaceId"
+      ],
+      "description": "Get workspace collaborators",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_add_workspace_collaborator",
+      "method": "POST",
+      "endpoint": "/v0/meta/workspaces/:workspaceId/collaborators",
+      "params": [
+        "collaborators",
+        "workspaceId"
+      ],
+      "description": "Add workspace collaborator",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_workspace_collaborator",
+      "method": "DELETE",
+      "endpoint": "/v0/meta/workspaces/:workspaceId/collaborators/:userOrGroupId",
+      "params": [
+        "userOrGroupId",
+        "workspaceId"
+      ],
+      "description": "Delete workspace collaborator",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_update_workspace_collaborator",
+      "method": "PATCH",
+      "endpoint": "/v0/meta/workspaces/:workspaceId/collaborators/:userOrGroupId",
+      "params": [
+        "permissionLevel",
+        "userOrGroupId",
+        "workspaceId"
+      ],
+      "description": "Update workspace collaborator",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_interface_invite",
+      "method": "DELETE",
+      "endpoint": "/v0/meta/bases/:baseId/interfaces/:pageBundleId/invites/:inviteId",
+      "params": [
+        "baseId",
+        "inviteId",
+        "pageBundleId"
+      ],
+      "description": "Delete interface invite",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_base_invite",
+      "method": "DELETE",
+      "endpoint": "/v0/meta/bases/:baseId/invites/:inviteId",
+      "params": [
+        "baseId",
+        "inviteId"
+      ],
+      "description": "Delete base invite",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_workspace_invite",
+      "method": "DELETE",
+      "endpoint": "/v0/meta/workspaces/:workspaceId/invites/:inviteId",
+      "params": [
+        "inviteId",
+        "workspaceId"
+      ],
+      "description": "Delete workspace invite",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_list_shares",
+      "method": "GET",
+      "endpoint": "/v0/meta/bases/:baseId/shares",
+      "params": [
+        "baseId"
+      ],
+      "description": "List shares",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_share",
+      "method": "DELETE",
+      "endpoint": "/v0/meta/bases/:baseId/shares/:shareId",
+      "params": [
+        "baseId",
+        "shareId"
+      ],
+      "description": "Delete share",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_manage_share",
+      "method": "PATCH",
+      "endpoint": "/v0/meta/bases/:baseId/shares/:shareId",
+      "params": [
+        "baseId",
+        "shareId",
+        "state"
+      ],
+      "description": "Manage share",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_enterprise",
+      "method": "GET",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId?include={value}&include={value}",
+      "params": [
+        "enterpriseAccountId",
+        "include"
+      ],
+      "description": "Get enterprise",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_create_descendant_enterprise",
+      "method": "POST",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/descendants",
+      "params": [
+        "enterpriseAccountId",
+        "name"
+      ],
+      "description": "Create descendant enterprise",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_remove_user_from_enterprise",
+      "method": "POST",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/users/:userId/remove",
+      "params": [
+        "enterpriseAccountId",
+        "isDryRun",
+        "removeFromDescendants",
+        "replacementOwnerId",
+        "userId"
+      ],
+      "description": "Remove user from enterprise",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_list_webhooks",
+      "method": "GET",
+      "endpoint": "/v0/bases/:baseId/webhooks",
+      "params": [
+        "baseId"
+      ],
+      "description": "List webhooks",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_create_a_webhook",
+      "method": "POST",
+      "endpoint": "/v0/bases/:baseId/webhooks",
+      "params": [
+        "baseId",
+        "notificationUrl",
+        "specification"
+      ],
+      "description": "Create a webhook",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_a_webhook",
+      "method": "DELETE",
+      "endpoint": "/v0/bases/:baseId/webhooks/:webhookId",
+      "params": [
+        "baseId",
+        "webhookId"
+      ],
+      "description": "Delete a webhook",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_enabledisable_webhook_notifications",
+      "method": "POST",
+      "endpoint": "/v0/bases/:baseId/webhooks/:webhookId/enableNotifications",
+      "params": [
+        "baseId",
+        "enable",
+        "webhookId"
+      ],
+      "description": "Enable/disable webhook notifications",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_list_webhook_payloads",
+      "method": "GET",
+      "endpoint": "/v0/bases/:baseId/webhooks/:webhookId/payloads?cursor={value}&limit={value}",
+      "params": [
+        "baseId",
+        "cursor",
+        "limit",
+        "webhookId"
+      ],
+      "description": "List webhook payloads",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_refresh_a_webhook",
+      "method": "POST",
+      "endpoint": "/v0/bases/:baseId/webhooks/:webhookId/refresh",
+      "params": [
+        "baseId",
+        "webhookId"
+      ],
+      "description": "Refresh a webhook",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_delete_records_from_a_hyperdb_table_by_primary_keys",
+      "method": "POST",
+      "endpoint": "/v0/:enterpriseAccountId/:dataTableId/deleteRecords",
+      "params": [
+        "dataTableId",
+        "enterpriseAccountId",
+        "primaryKeysForDelete"
+      ],
+      "description": "Delete records from a HyperDB table by primary keys",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_read_records_from_a_hyperdb_table",
+      "method": "POST",
+      "endpoint": "/v0/:enterpriseAccountId/:dataTableId/getRecords",
+      "params": [
+        "cursor",
+        "dataTableId",
+        "enterpriseAccountId",
+        "fields",
+        "maxRecords",
+        "primaryKeys"
+      ],
+      "description": "Read records from a HyperDB table",
+      "source": "postman_collection"
+    },
+    {
+      "action": "put_update_or_insert_records_from_a_hyperdb_table_by_primary_keys",
+      "method": "PUT",
+      "endpoint": "/v0/:enterpriseAccountId/:dataTableId/upsertRecords",
+      "params": [
+        "dataTableId",
+        "enterpriseAccountId",
+        "records"
+      ],
+      "description": "Update or insert records from a HyperDB table by primary keys",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_users_by_email",
+      "method": "DELETE",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/users?email={value}&email={value}",
+      "params": [
+        "email",
+        "enterpriseAccountId"
+      ],
+      "description": "Delete users by email",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_users_by_id_or_email",
+      "method": "GET",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/users?email={value}&email={value}&id={value}&id={value}&include={value}&include={value}",
+      "params": [
+        "email",
+        "enterpriseAccountId",
+        "id",
+        "include"
+      ],
+      "description": "Get users by id or email",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_manage_user_batched",
+      "method": "PATCH",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/users",
+      "params": [
+        "enterpriseAccountId",
+        "users"
+      ],
+      "description": "Manage user batched",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_manage_user_membership",
+      "method": "POST",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/users/claim",
+      "params": [
+        "enterpriseAccountId",
+        "users"
+      ],
+      "description": "Manage user membership",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_grant_admin_access",
+      "method": "POST",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/users/grantAdminAccess",
+      "params": [
+        "enterpriseAccountId",
+        "users"
+      ],
+      "description": "Grant admin access",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_revoke_admin_access",
+      "method": "POST",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/users/revokeAdminAccess",
+      "params": [
+        "enterpriseAccountId",
+        "users"
+      ],
+      "description": "Revoke admin access",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_user_by_id",
+      "method": "DELETE",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/users/:userId",
+      "params": [
+        "enterpriseAccountId",
+        "userId"
+      ],
+      "description": "Delete user by id",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_user_by_id",
+      "method": "GET",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/users/:userId?include={value}&include={value}",
+      "params": [
+        "enterpriseAccountId",
+        "include",
+        "userId"
+      ],
+      "description": "Get user by id",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_manage_user",
+      "method": "PATCH",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/users/:userId",
+      "params": [
+        "email",
+        "enterpriseAccountId",
+        "firstName",
+        "lastName",
+        "state",
+        "userId"
+      ],
+      "description": "Manage user",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_logout_user",
+      "method": "POST",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/users/:userId/logout",
+      "params": [
+        "enterpriseAccountId",
+        "userId"
+      ],
+      "description": "Logout user",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_user_info",
+      "method": "GET",
+      "endpoint": "/v0/meta/whoami",
+      "params": [],
+      "description": "Get user info",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_list_block_installations",
+      "method": "GET",
+      "endpoint": "/v0/meta/bases/:baseId/blockInstallations",
+      "params": [
+        "baseId"
+      ],
+      "description": "List block installations",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_block_installation",
+      "method": "DELETE",
+      "endpoint": "/v0/meta/bases/:baseId/blockInstallations/:blockInstallationId",
+      "params": [
+        "baseId",
+        "blockInstallationId"
+      ],
+      "description": "Delete block installation",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_manage_block_installation",
+      "method": "PATCH",
+      "endpoint": "/v0/meta/bases/:baseId/blockInstallations/:blockInstallationId",
+      "params": [
+        "baseId",
+        "blockInstallationId",
+        "state"
+      ],
+      "description": "Manage block installation",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_change_events",
+      "method": "GET",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/changeEvents?startTime={value}&endTime={value}&pageSize={value}&offset={value}",
+      "params": [
+        "endTime",
+        "enterpriseAccountId",
+        "offset",
+        "pageSize",
+        "startTime"
+      ],
+      "description": "Change events",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_list_ediscovery_exports",
+      "method": "GET",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/exports?state={value}&pageSize={value}&offset={value}",
+      "params": [
+        "enterpriseAccountId",
+        "offset",
+        "pageSize",
+        "state"
+      ],
+      "description": "List eDiscovery exports",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_create_ediscovery_export",
+      "method": "POST",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/exports",
+      "params": [
+        "baseId",
+        "enterpriseAccountId",
+        "includeCsvFormat",
+        "shouldSendEmailOnCompletion"
+      ],
+      "description": "Create eDiscovery export",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_ediscovery_export",
+      "method": "GET",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/exports/:enterpriseTaskId",
+      "params": [
+        "enterpriseAccountId",
+        "enterpriseTaskId"
+      ],
+      "description": "Get eDiscovery export",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_audit_log_events",
+      "method": "GET",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/auditLogEvents?startTime={value}&endTime={value}&originatingUserId={value}&eventType={value}&modelId={value}&pageSize={value}&sortOrder={value}&previous={value}&next={value}&category={value}",
+      "params": [
+        "category",
+        "endTime",
+        "enterpriseAccountId",
+        "eventType",
+        "modelId",
+        "next",
+        "originatingUserId",
+        "pageSize",
+        "previous",
+        "sortOrder",
+        "startTime"
+      ],
+      "description": "Audit log events",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_move_user_groups",
+      "method": "POST",
+      "endpoint": "/v0/meta/enterpriseAccounts/:enterpriseAccountId/moveGroups",
+      "params": [
+        "enterpriseAccountId",
+        "groupIds",
+        "targetEnterpriseAccountId"
+      ],
+      "description": "Move user groups",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_user_group",
+      "method": "GET",
+      "endpoint": "/v0/meta/groups/:groupId?include={value}&include={value}",
+      "params": [
+        "groupId",
+        "include"
+      ],
+      "description": "Get user group",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_list_groups",
+      "method": "GET",
+      "endpoint": "/scim/v2/Groups?count={value}&filter={value}",
+      "params": [
+        "count",
+        "filter"
+      ],
+      "description": "List groups",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_create_group",
+      "method": "POST",
+      "endpoint": "/scim/v2/Groups",
+      "params": [
+        "displayName",
+        "schemas"
+      ],
+      "description": "Create group",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_group",
+      "method": "DELETE",
+      "endpoint": "/scim/v2/Groups/:groupId",
+      "params": [
+        "groupId"
+      ],
+      "description": "Delete group",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_group",
+      "method": "GET",
+      "endpoint": "/scim/v2/Groups/:groupId",
+      "params": [
+        "groupId"
+      ],
+      "description": "Get group",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_patch_group",
+      "method": "PATCH",
+      "endpoint": "/scim/v2/Groups/:groupId",
+      "params": [
+        "Operations",
+        "groupId",
+        "schemas"
+      ],
+      "description": "Patch group",
+      "source": "postman_collection"
+    },
+    {
+      "action": "put_put_group",
+      "method": "PUT",
+      "endpoint": "/scim/v2/Groups/:groupId",
+      "params": [
+        "displayName",
+        "groupId",
+        "members",
+        "schemas"
+      ],
+      "description": "Put group",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_list_users",
+      "method": "GET",
+      "endpoint": "/scim/v2/Users?startIndex={value}&count={value}&filter={value}",
+      "params": [
+        "count",
+        "filter",
+        "startIndex"
+      ],
+      "description": "List users",
+      "source": "postman_collection"
+    },
+    {
+      "action": "post_create_user",
+      "method": "POST",
+      "endpoint": "/scim/v2/Users",
+      "params": [
+        "active",
+        "addresses",
+        "displayName",
+        "emails",
+        "externalId",
+        "groups",
+        "id",
+        "ims",
+        "locale",
+        "meta",
+        "name",
+        "nickName",
+        "password",
+        "phoneNumbers",
+        "photos",
+        "preferredLanguage",
+        "profileUrl",
+        "schemas",
+        "timezone",
+        "title",
+        "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User",
+        "userName",
+        "userType"
+      ],
+      "description": "Create user",
+      "source": "postman_collection"
+    },
+    {
+      "action": "delete_delete_user",
+      "method": "DELETE",
+      "endpoint": "/scim/v2/Users/:userId",
+      "params": [
+        "userId"
+      ],
+      "description": "Delete user",
+      "source": "postman_collection"
+    },
+    {
+      "action": "get_get_user",
+      "method": "GET",
+      "endpoint": "/scim/v2/Users/:userId",
+      "params": [
+        "userId"
+      ],
+      "description": "Get user",
+      "source": "postman_collection"
+    },
+    {
+      "action": "patch_patch_user",
+      "method": "PATCH",
+      "endpoint": "/scim/v2/Users/:userId",
+      "params": [
+        "Operations",
+        "schemas",
+        "userId"
+      ],
+      "description": "Patch user",
+      "source": "postman_collection"
+    },
+    {
+      "action": "put_put_user",
+      "method": "PUT",
+      "endpoint": "/scim/v2/Users/:userId",
+      "params": [
+        "active",
+        "addresses",
+        "displayName",
+        "emails",
+        "externalId",
+        "groups",
+        "id",
+        "ims",
+        "locale",
+        "meta",
+        "name",
+        "nickName",
+        "password",
+        "phoneNumbers",
+        "photos",
+        "preferredLanguage",
+        "profileUrl",
+        "schemas",
+        "timezone",
+        "title",
+        "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User",
+        "userId",
+        "userName",
+        "userType"
+      ],
+      "description": "Put user",
+      "source": "postman_collection"
+    }
+  ],
+  "extracted_at": 1758831060.2287629,
+  "source": "postman_export"
+}

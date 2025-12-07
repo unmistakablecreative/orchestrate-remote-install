@@ -1,0 +1,94 @@
+{
+  "url": "https://developers.kit.com/api-reference/broadcasts/create-a-broadcast",
+  "title": "Kit Developer Documentation",
+  "method": "POST",
+  "endpoint": "/v4/broadcasts",
+  "headings": [
+    "Create a broadcast"
+  ],
+  "parameters": [
+    "all",
+    "any",
+    "broadcast",
+    "content",
+    "created_at",
+    "description",
+    "email_address",
+    "email_template",
+    "email_template_id",
+    "ids",
+    "none",
+    "preview_text",
+    "public_url",
+    "publication_id",
+    "published_at",
+    "subject",
+    "subscriber_filter"
+  ],
+  "curl_examples": [
+    "curl --request POST \\\n  --url https://api.kit.com/v4/broadcasts \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Kit-Api-Key: <api-key>' \\\n  --data '{\n  \"email_template_id\": 2,\n  \"email_address\": null,\n  \"content\": \"<p>Let me introduce myself</p>\",\n  \"description\": \"Intro email\",\n  \"public\": true,\n  \"published_at\": \"2023-02-17T11:43:55+00:00\",\n  \"send_at\": null,\n  \"thumbnail_alt\": null,\n  \"thumbnail_url\": null,\n  \"preview_text\": \"Pleased to meet you!\",\n  \"subject\": \"Hello!\",\n  \"subscriber_filter\": [\n    {\n      \"all\": [\n        {\n          \"type\": \"segment\",\n          \"ids\": [\n            18\n          ]\n        }\n      ],\n      \"any\": null,\n      \"none\": null\n    }\n  ]\n}'",
+    "curl --request POST \\"
+  ],
+  "json_examples": [
+    {
+      "broadcast": {
+        "id": 30,
+        "publication_id": 30,
+        "created_at": "2023-02-17T11:43:55Z",
+        "subject": "Hello!",
+        "preview_text": "Pleased to meet you!",
+        "description": "Intro email",
+        "content": "<p>Let me introduce myself</p>",
+        "public": true,
+        "published_at": "2023-02-17T11:43:55Z",
+        "send_at": null,
+        "thumbnail_alt": null,
+        "thumbnail_url": null,
+        "public_url": "https://kit-greetings.kit.com/posts/",
+        "email_address": "greetings@convertkit.dev",
+        "email_template": {
+          "id": 2,
+          "name": "Classic"
+        },
+        "subscriber_filter": [
+          {
+            "all": [
+              {
+                "type": "segment",
+                "ids": [
+                  18
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "all": [
+        {
+          "type": "segment",
+          "ids": [
+            18
+          ]
+        }
+      ],
+      "any": null,
+      "none": null
+    },
+    {
+      "all": [
+        {
+          "type": "segment",
+          "ids": [
+            18
+          ]
+        }
+      ]
+    }
+  ],
+  "all_code_blocks": [
+    "curl --request POST \\\n  --url https://api.kit.com/v4/broadcasts \\\n  --header 'Content-Type: application/json' \\\n  --header 'X-Kit-Api-Key: <api-key>' \\\n  --data '{\n  \"email_template_id\": 2,\n  \"email_address\": null,\n  \"content\": \"<p>Let me introduce myself</p>\",\n  \"description\": \"Intro email\",\n  \"public\": true,\n  \"published_at\": \"2023-02-17T11:43:55+00:00\",\n  \"send_at\": null,\n  \"thumbnail_alt\": null,\n  \"thumbnail_url\": null,\n  \"preview_text\": \"Pleased to meet you!\",\n  \"subject\": \"Hello!\",\n  \"subscriber_filter\": [\n    {\n      \"all\": [\n        {\n          \"type\": \"segment\",\n          \"ids\": [\n            18\n          ]\n        }\n      ],\n      \"any\": null,\n      \"none\": null\n    }\n  ]\n}'",
+    "{\n  \"broadcast\": {\n    \"id\": 30,\n    \"publication_id\": 30,\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"subject\": \"Hello!\",\n    \"preview_text\": \"Pleased to meet you!\",\n    \"description\": \"Intro email\",\n    \"content\": \"<p>Let me introduce myself</p>\",\n    \"public\": true,\n    \"published_at\": \"2023-02-17T11:43:55Z\",\n    \"send_at\": null,\n    \"thumbnail_alt\": null,\n    \"thumbnail_url\": null,\n    \"public_url\": \"https://kit-greetings.kit.com/posts/\",\n    \"email_address\": \"greetings@convertkit.dev\",\n    \"email_template\": {\n      \"id\": 2,\n      \"name\": \"Classic\"\n    },\n    \"subscriber_filter\": [\n      {\n        \"all\": [\n          {\n            \"type\": \"segment\",\n            \"ids\": [\n              18\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}"
+  ]
+}

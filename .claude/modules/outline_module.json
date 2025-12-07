@@ -1,0 +1,111 @@
+{
+  "module": "outline",
+  "token_count_estimate": 2000,
+  "triggers": ["outline", "doc", "document", "write doc", "create doc", "update doc"],
+  "patterns": {
+    "instant_processing": {
+      "method": "Write(outline_docs_queue/my-doc.md, content)",
+      "detection_speed": "1-2 seconds via watchdog filesystem events",
+      "archive_location": "outline_docs_queue/.processed/"
+    },
+    "parent_doc_routing": {
+      "rule": "Add parent doc reference in frontmatter to create child docs",
+      "routes": {
+        "fundraising": {
+          "keywords": ["fundraise", "fundraising", "pitch", "deck", "investor", "valuation", "cap table", "term sheet", "series a", "seed round"],
+          "parent_doc": "Orchestrate Fundraising Strategy",
+          "parent_doc_id": "4b9326f3-227a-4a08-8b8f-553519e18a64"
+        },
+        "technical": {
+          "keywords": ["daily execution", "daily log", "task log", "spec", "refactor", "build", "implementation", "architecture", "api", "code", "debug", "fix", "optimize", "system", "deployment", "framework", "analysis", "infrastructure"],
+          "parent_doc": "Technical Documents",
+          "parent_doc_id": "0f8a9065-c753-4c29-bbd0-6cc54a17825c"
+        },
+        "newsletter": {
+          "keywords": ["newsletter", "email blast", "subscriber", "email content", "email-", "update-email"],
+          "parent_doc": "Newsletter Content Pipeline",
+          "parent_doc_id": "57470b01-8e8c-42d1-9048-2801743ec248"
+        },
+        "blog": {
+          "keywords": ["blog", "article", "post", "medium", "substack"],
+          "parent_doc": "Blog Content Pipeline",
+          "parent_doc_id": "c399e3d5-d1f7-4183-9382-f70e07eef9d3"
+        },
+        "video": {
+          "keywords": ["sora", "scene", "script", "video", "commercial", "ad creative", "youtube", "footage", "character-profile", "character profile"],
+          "parent_doc": "Video Content Pipeline",
+          "parent_doc_id": "822481bd-1f88-4c0f-b2c6-190b62d9df77"
+        },
+        "command_center": {
+          "keywords": ["inbox summary", "knowledge synthesis", "overview", "dashboard", "summary of"],
+          "parent_doc": "OrchestrateOS Command Center",
+          "parent_doc_id": "4007fd3e-df4f-4bca-b2c1-a932051a09b5"
+        },
+        "pattern": {
+          "keywords": ["pattern", "template", "framework", "terminology", "best-practice"],
+          "parent_doc": "System Patterns",
+          "parent_doc_id": "2646f51f-cd6b-451e-961d-27ea8be770fb"
+        }
+      },
+      "method": "Match keywords in title/description → Add parent_doc_title in frontmatter",
+      "fallback": "If no match, doc goes to Inbox (default)"
+    },
+    "auto_routing": {
+      "deprecated": "Use parent_doc_routing instead",
+      "old_keywords": {
+        "video": ["sora", "scene", "script"],
+        "technical": ["spec", "api", "architecture"],
+        "blog": ["blog", "article"],
+        "newsletter": ["newsletter", "email-"],
+        "pattern": ["pattern", "template"]
+      }
+    },
+    "collection_routing": {
+      "method": "Add hashtag to content",
+      "hashtags": ["#Projects", "#Areas", "#Resources", "#Inbox", "#Content"]
+    },
+    "updates": {
+      "prefix": "update-",
+      "behavior": "Auto-updates existing doc by matching name"
+    },
+    "verification": {
+      "rule": "ALWAYS verify doc was created before marking task complete",
+      "methods": [
+        "Wait 5 seconds after writing to queue",
+        "Check outline_docs_queue/.processed/ for filename",
+        "If not found, wait another 5 seconds and check again",
+        "Only mark task complete after file appears in .processed/"
+      ],
+      "why": "Writing to queue != doc creation. Watcher must process first.",
+      "timeout": "15 seconds max wait, then log warning"
+    },
+    "default_rule": {
+      "condition": "If task creates markdown doc",
+      "action": "ALWAYS write to outline_docs_queue/ and verify creation",
+      "never": "NEVER create standalone .md files outside queue",
+      "verification_command": "python3 tools/outline_editor.py verify_doc_created --params '{\"filename\": \"your-file.md\"}'",
+      "verification_required": true,
+      "why": "Writing to queue != doc creation. Must verify file was processed before marking task complete."
+    }
+  },
+  "why_automation_works": {
+    "reason": "LLMs write content, scripts handle structure",
+    "performance": "26x faster, 15x fewer errors",
+    "context_savings": "No function calls needed"
+  },
+  "tool_actions": [
+    "outline_editor.create_doc",
+    "outline_editor.update_doc",
+    "outline_editor.move_doc",
+    "outline_editor.search_docs"
+  ],
+  "file_paths": {
+    "queue": "outline_docs_queue/",
+    "processed": "outline_docs_queue/.processed/",
+    "watcher": "tools/outline_queue_watcher.py"
+  },
+  "doc_tracking": {
+    "log_file": ".claude/archive/outline_docs_log.md",
+    "required_fields": ["Doc name", "One-line summary", "What it unlocks"]
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "url": "https://developers.kit.com/api-reference/broadcasts/get-stats-for-a-broadcast",
+  "title": "Kit Developer Documentation",
+  "method": "GET",
+  "endpoint": "/v4/broadcasts/{broadcast_id}/stats",
+  "headings": [
+    "Get stats for a broadcast"
+  ],
+  "parameters": [
+    "broadcast",
+    "click_rate",
+    "emails_opened",
+    "open_rate",
+    "progress",
+    "recipients",
+    "stats",
+    "status",
+    "total_clicks",
+    "unsubscribe_rate",
+    "unsubscribes"
+  ],
+  "curl_examples": [
+    "curl --request GET \\\n  --url https://api.kit.com/v4/broadcasts/{broadcast_id}/stats \\\n  --header 'X-Kit-Api-Key: <api-key>'"
+  ],
+  "json_examples": [
+    {
+      "broadcast": {
+        "id": 178,
+        "stats": {
+          "recipients": 0,
+          "open_rate": 0,
+          "emails_opened": 0,
+          "click_rate": 0,
+          "unsubscribe_rate": 0,
+          "unsubscribes": 0,
+          "total_clicks": 0,
+          "show_total_clicks": false,
+          "status": "draft",
+          "progress": 0,
+          "open_tracking_disabled": false,
+          "click_tracking_disabled": false
+        }
+      }
+    },
+    {
+      "id": 178,
+      "stats": {
+        "recipients": 0,
+        "open_rate": 0,
+        "emails_opened": 0,
+        "click_rate": 0,
+        "unsubscribe_rate": 0,
+        "unsubscribes": 0,
+        "total_clicks": 0,
+        "show_total_clicks": false,
+        "status": "draft",
+        "progress": 0,
+        "open_tracking_disabled": false,
+        "click_tracking_disabled": false
+      }
+    }
+  ],
+  "all_code_blocks": [
+    "curl --request GET \\\n  --url https://api.kit.com/v4/broadcasts/{broadcast_id}/stats \\\n  --header 'X-Kit-Api-Key: <api-key>'",
+    "{\n  \"broadcast\": {\n    \"id\": 178,\n    \"stats\": {\n      \"recipients\": 0,\n      \"open_rate\": 0,\n      \"emails_opened\": 0,\n      \"click_rate\": 0,\n      \"unsubscribe_rate\": 0,\n      \"unsubscribes\": 0,\n      \"total_clicks\": 0,\n      \"show_total_clicks\": false,\n      \"status\": \"draft\",\n      \"progress\": 0,\n      \"open_tracking_disabled\": false,\n      \"click_tracking_disabled\": false\n    }\n  }\n}"
+  ]
+}

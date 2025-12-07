@@ -1,0 +1,21 @@
+{
+  "rules": [
+    {
+      "trigger": {
+        "type": "entry_updated",
+        "file": "data/fuck_automation.json"
+      },
+      "condition": "new_entry.get('status') == 'send_invite'",
+      "action": {
+        "tool": "nylasinbox",
+        "action": "send_email",
+        "params": {
+          "to": "{email}",
+          "subject": "\ud83e\udd21 You made it",
+          "body": "Invite triggered from fuck_automation.json",
+          "is_html": false
+        }
+      }
+    }
+  ]
+}

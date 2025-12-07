@@ -1,0 +1,58 @@
+{
+  "url": "https://developers.kit.com/api-reference/accounts/get-current-account",
+  "title": "Kit Developer Documentation",
+  "method": "GET",
+  "endpoint": "/v4/account",
+  "headings": [
+    "Get current account"
+  ],
+  "parameters": [
+    "account",
+    "created_at",
+    "email",
+    "friendly_name",
+    "plan_type",
+    "primary_email_address",
+    "timezone",
+    "user",
+    "utc_offset"
+  ],
+  "curl_examples": [
+    "curl --request GET \\\n  --url https://api.kit.com/v4/account \\\n  --header 'X-Kit-Api-Key: <api-key>'"
+  ],
+  "json_examples": [
+    {
+      "user": {
+        "email": "test@convertkit.dev"
+      },
+      "account": {
+        "id": 29,
+        "name": "Kit Greetings",
+        "plan_type": "creator",
+        "primary_email_address": "test@convertkit.dev",
+        "created_at": "2023-02-17T11:43:55Z",
+        "timezone": {
+          "name": "America/New_York",
+          "friendly_name": "Eastern Time (US & Canada)",
+          "utc_offset": "-05:00"
+        }
+      }
+    },
+    {
+      "id": 29,
+      "name": "Kit Greetings",
+      "plan_type": "creator",
+      "primary_email_address": "test@convertkit.dev",
+      "created_at": "2023-02-17T11:43:55Z",
+      "timezone": {
+        "name": "America/New_York",
+        "friendly_name": "Eastern Time (US & Canada)",
+        "utc_offset": "-05:00"
+      }
+    }
+  ],
+  "all_code_blocks": [
+    "curl --request GET \\\n  --url https://api.kit.com/v4/account \\\n  --header 'X-Kit-Api-Key: <api-key>'",
+    "{\n  \"user\": {\n    \"email\": \"test@convertkit.dev\"\n  },\n  \"account\": {\n    \"id\": 29,\n    \"name\": \"Kit Greetings\",\n    \"plan_type\": \"creator\",\n    \"primary_email_address\": \"test@convertkit.dev\",\n    \"created_at\": \"2023-02-17T11:43:55Z\",\n    \"timezone\": {\n      \"name\": \"America/New_York\",\n      \"friendly_name\": \"Eastern Time (US & Canada)\",\n      \"utc_offset\": \"-05:00\"\n    }\n  }\n}"
+  ]
+}

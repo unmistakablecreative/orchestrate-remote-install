@@ -1,0 +1,2 @@
+{"script": "orchestrate_diagnostic", "path": "tools/orchestrate_diagnostic.py", "description": "Runs system diagnostics - checks engine status (automation_engine, claude_execution_engine, buffer_engine, podcast_publisher), validates critical JSON files, shows recent task success rate"}
+{"script": "scrape_site", "path": "tools/scrape_site.py", "description": "Scrapes a website URL and returns clean markdown content"}

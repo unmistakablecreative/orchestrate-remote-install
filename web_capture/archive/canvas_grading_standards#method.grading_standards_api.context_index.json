@@ -1,0 +1,90 @@
+{
+  "url": "https://developerdocs.instructure.com/services/canvas/resources/grading_standards#method.grading_standards_api.context_index",
+  "title": "Grading Standards | Instructure Developer Documentation Portal",
+  "method": "POST",
+  "endpoint": "/api/v1/courses/<course_id>/grading_standards",
+  "headings": [
+    "Grading Standards",
+    "Grading Standards API",
+    "Create a new grading standard",
+    "List the grading standards available in a context.",
+    "Get a single grading standard in a context.",
+    "Update a grading standard",
+    "Delete a grading standard"
+  ],
+  "parameters": [
+    "Type",
+    "calculated_value",
+    "context_id",
+    "context_type",
+    "grading_scheme",
+    "points_based",
+    "scaling_factor",
+    "title",
+    "value"
+  ],
+  "curl_examples": [
+    "curl https://<canvas>/api/v1/courses/<course_id>/grading_standards \\\n\n  -X POST \\\n\n  -H 'Authorization: Bearer <token>' \\\n\n  -d 'title=New standard name' \\\n\n  -d 'points_based=false' \\\n\n  -d 'scaling_factor=1.0' \\\n\n  -d 'grading_scheme_entry[][name]=A' \\\n\n  -d 'grading_scheme_entry[][value]=94' \\\n\n  -d 'grading_scheme_entry[][name]=A-' \\\n\n  -d 'grading_scheme_entry[][value]=90' \\\n\n  -d 'grading_scheme_entry[][name]=B+' \\\n\n  -d 'grading_scheme_entry[][value]=87' \\\n\n  -d 'grading_scheme_entry[][name]=B' \\\n\n  -d 'grading_scheme_entry[][value]=84' \\\n\n  -d 'grading_scheme_entry[][name]=B-' \\\n\n  -d 'grading_scheme_entry[][value]=80' \\\n\n  -d 'grading_scheme_entry[][name]=C+' \\\n\n  -d 'grading_scheme_entry[][value]=77' \\\n\n  -d 'grading_scheme_entry[][name]=C' \\\n\n  -d 'grading_scheme_entry[][value]=74' \\\n\n  -d 'grading_scheme_entry[][name]=C-' \\\n\n  -d 'grading_scheme_entry[][value]=70' \\\n\n  -d 'grading_scheme_entry[][name]=D+' \\\n\n  -d 'grading_scheme_entry[][value]=67' \\\n\n  -d 'grading_scheme_entry[][name]=D' \\\n\n  -d 'grading_scheme_entry[][value]=64' \\\n\n  -d 'grading_scheme_entry[][name]=D-' \\\n\n  -d 'grading_scheme_entry[][value]=61' \\\n\n  -d 'grading_scheme_entry[][name]=F' \\\n\n  -d 'grading_scheme_entry[][value]=0'",
+    "curl https://<canvas>/api/v1/courses/1/grading_standards \\\n\n  -H 'Authorization: Bearer <token>'",
+    "curl https://<canvas>/api/v1/courses/1/grading_standards/5 \\\n\n  -H 'Authorization: Bearer <token>'",
+    "curl https://<canvas>/api/v1/courses/1/grading_standards/5 \\\n\n  -X PUT \\\n\n  -H 'Authorization: Bearer <token>' \\\n\n  -d 'title=Updated+Grading+Standard'\n\n  -d 'points_based=false' \\\n\n  -d 'scaling_factor=1.0' \\\n\n  -d 'grading_scheme_entry[][name]=A' \\\n\n  -d 'grading_scheme_entry[][value]=94' \\\n\n  -d 'grading_scheme_entry[][name]=A-' \\\n\n  -d 'grading_scheme_entry[][value]=90' \\\n\n  -d 'grading_scheme_entry[][name]=B+' \\\n\n  -d 'grading_scheme_entry[][value]=87' \\\n\n  -d 'grading_scheme_entry[][name]=B' \\\n\n  -d 'grading_scheme_entry[][value]=84' \\\n\n  -d 'grading_scheme_entry[][name]=B-' \\\n\n  -d 'grading_scheme_entry[][value]=80' \\\n\n  -d 'grading_scheme_entry[][name]=C+' \\\n\n  -d 'grading_scheme_entry[][value]=77' \\\n\n  -d 'grading_scheme_entry[][name]=C' \\\n\n  -d 'grading_scheme_entry[][value]=74' \\\n\n  -d 'grading_scheme_entry[][name]=C-' \\\n\n  -d 'grading_scheme_entry[][value]=70' \\\n\n  -d 'grading_scheme_entry[][name]=D+' \\\n\n  -d 'grading_scheme_entry[][value]=67' \\\n\n  -d 'grading_scheme_entry[][name]=D' \\\n\n  -d 'grading_scheme_entry[][value]=64' \\\n\n  -d 'grading_scheme_entry[][name]=D-' \\\n\n  -d 'grading_scheme_entry[][value]=61' \\\n\n  -d 'grading_scheme_entry[][name]=F' \\\n\n  -d 'grading_scheme_entry[][value]=0'",
+    "curl https://<canvas>/api/v1/courses/1/grading_standards/5 \\\n\n  -X DELETE \\\n\n  -H 'Authorization: Bearer <token>'",
+    "curl https://<canvas>/api/v1/courses/<course_id>/grading_standards \\",
+    "curl https://<canvas>/api/v1/courses/1/grading_standards \\",
+    "curl https://<canvas>/api/v1/courses/1/grading_standards/5 \\"
+  ],
+  "json_examples": [
+    "{\n\n  // The name for an entry value within a GradingStandard that describes the range\n\n  // of the value\n\n  \"name\": \"A\",\n\n  // The value for the name of the entry within a GradingStandard. The entry\n\n  // represents the lower bound of the range for the entry. This range includes\n\n  // the value up to the next entry in the GradingStandard, or the maximum value\n\n  // for the scheme if there is no upper bound. The lowest value will have a lower\n\n  // bound range of 0.\n\n  \"value\": 0.9,\n\n  // The value that will be used to compare against a grade. For percentage based\n\n  // grading schemes, this is a number from 0 - 100 representing a percent. For\n\n  // point based grading schemes, this is the lower bound of points to achieve the\n\n  // grade.\n\n  \"calculated_value\": 90\n\n}",
+    "{\n\n  // the title of the grading standard\n\n  \"title\": \"Account Standard\",\n\n  // the id of the grading standard\n\n  \"id\": 1,\n\n  // the context this standard is associated with, either 'Account' or 'Course'\n\n  \"context_type\": \"Account\",\n\n  // the id for the context either the Account or Course id\n\n  \"context_id\": 1,\n\n  // whether this is a points-based standard\n\n  \"points_based\": false,\n\n  // the factor by which to scale a score. 1 for percentage based schemss and the\n\n  // max value of points for points based schemes. This number cannot be changed\n\n  // for percentage based schemes.\n\n  \"scaling_factor\": 1.0,\n\n  // A list of GradingSchemeEntry that make up the Grading Standard as an array of\n\n  // values with the scheme name and value\n\n  \"grading_scheme\": [{\"name\":\"A\",\"value\":0.9}, {\"name\":\"B\",\"value\":0.8}, {\"name\":\"C\",\"value\":0.7}, {\"name\":\"D\",\"value\":0.6}]\n\n}",
+    {
+      "title": "New standard name",
+      "id": 1,
+      "context_id": 1,
+      "context_type": "Course",
+      "grading_scheme": [
+        {
+          "name": "A",
+          "value": 0.9
+        },
+        {
+          "name": "B",
+          "value": 0.8
+        }
+      ]
+    }
+  ],
+  "all_code_blocks": [
+    "{\n\n  // The name for an entry value within a GradingStandard that describes the range\n\n  // of the value\n\n  \"name\": \"A\",\n\n  // The value for the name of the entry within a GradingStandard. The entry\n\n  // represents the lower bound of the range for the entry. This range includes\n\n  // the value up to the next entry in the GradingStandard, or the maximum value\n\n  // for the scheme if there is no upper bound. The lowest value will have a lower\n\n  // bound range of 0.\n\n  \"value\": 0.9,\n\n  // The value that will be used to compare against a grade. For percentage based\n\n  // grading schemes, this is a number from 0 - 100 representing a percent. For\n\n  // point based grading schemes, this is the lower bound of points to achieve the\n\n  // grade.\n\n  \"calculated_value\": 90\n\n}",
+    "{\n\n  // the title of the grading standard\n\n  \"title\": \"Account Standard\",\n\n  // the id of the grading standard\n\n  \"id\": 1,\n\n  // the context this standard is associated with, either 'Account' or 'Course'\n\n  \"context_type\": \"Account\",\n\n  // the id for the context either the Account or Course id\n\n  \"context_id\": 1,\n\n  // whether this is a points-based standard\n\n  \"points_based\": false,\n\n  // the factor by which to scale a score. 1 for percentage based schemss and the\n\n  // max value of points for points based schemes. This number cannot be changed\n\n  // for percentage based schemes.\n\n  \"scaling_factor\": 1.0,\n\n  // A list of GradingSchemeEntry that make up the Grading Standard as an array of\n\n  // values with the scheme name and value\n\n  \"grading_scheme\": [{\"name\":\"A\",\"value\":0.9}, {\"name\":\"B\",\"value\":0.8}, {\"name\":\"C\",\"value\":0.7}, {\"name\":\"D\",\"value\":0.6}]\n\n}",
+    "curl https://<canvas>/api/v1/courses/<course_id>/grading_standards \\\n\n  -X POST \\\n\n  -H 'Authorization: Bearer <token>' \\\n\n  -d 'title=New standard name' \\\n\n  -d 'points_based=false' \\\n\n  -d 'scaling_factor=1.0' \\\n\n  -d 'grading_scheme_entry[][name]=A' \\\n\n  -d 'grading_scheme_entry[][value]=94' \\\n\n  -d 'grading_scheme_entry[][name]=A-' \\\n\n  -d 'grading_scheme_entry[][value]=90' \\\n\n  -d 'grading_scheme_entry[][name]=B+' \\\n\n  -d 'grading_scheme_entry[][value]=87' \\\n\n  -d 'grading_scheme_entry[][name]=B' \\\n\n  -d 'grading_scheme_entry[][value]=84' \\\n\n  -d 'grading_scheme_entry[][name]=B-' \\\n\n  -d 'grading_scheme_entry[][value]=80' \\\n\n  -d 'grading_scheme_entry[][name]=C+' \\\n\n  -d 'grading_scheme_entry[][value]=77' \\\n\n  -d 'grading_scheme_entry[][name]=C' \\\n\n  -d 'grading_scheme_entry[][value]=74' \\\n\n  -d 'grading_scheme_entry[][name]=C-' \\\n\n  -d 'grading_scheme_entry[][value]=70' \\\n\n  -d 'grading_scheme_entry[][name]=D+' \\\n\n  -d 'grading_scheme_entry[][value]=67' \\\n\n  -d 'grading_scheme_entry[][name]=D' \\\n\n  -d 'grading_scheme_entry[][value]=64' \\\n\n  -d 'grading_scheme_entry[][name]=D-' \\\n\n  -d 'grading_scheme_entry[][value]=61' \\\n\n  -d 'grading_scheme_entry[][name]=F' \\\n\n  -d 'grading_scheme_entry[][value]=0'",
+    "{\n\n  \"title\": \"New standard name\",\n\n  \"id\": 1,\n\n  \"context_id\": 1,\n\n  \"context_type\": \"Course\",\n\n  \"grading_scheme\": [\n\n    {\"name\": \"A\", \"value\": 0.9},\n\n    {\"name\": \"B\", \"value\": 0.8}\n\n  ]\n\n}",
+    "curl https://<canvas>/api/v1/courses/1/grading_standards \\\n\n  -H 'Authorization: Bearer <token>'",
+    "curl https://<canvas>/api/v1/courses/1/grading_standards/5 \\\n\n  -H 'Authorization: Bearer <token>'",
+    "curl https://<canvas>/api/v1/courses/1/grading_standards/5 \\\n\n  -X PUT \\\n\n  -H 'Authorization: Bearer <token>' \\\n\n  -d 'title=Updated+Grading+Standard'\n\n  -d 'points_based=false' \\\n\n  -d 'scaling_factor=1.0' \\\n\n  -d 'grading_scheme_entry[][name]=A' \\\n\n  -d 'grading_scheme_entry[][value]=94' \\\n\n  -d 'grading_scheme_entry[][name]=A-' \\\n\n  -d 'grading_scheme_entry[][value]=90' \\\n\n  -d 'grading_scheme_entry[][name]=B+' \\\n\n  -d 'grading_scheme_entry[][value]=87' \\\n\n  -d 'grading_scheme_entry[][name]=B' \\\n\n  -d 'grading_scheme_entry[][value]=84' \\\n\n  -d 'grading_scheme_entry[][name]=B-' \\\n\n  -d 'grading_scheme_entry[][value]=80' \\\n\n  -d 'grading_scheme_entry[][name]=C+' \\\n\n  -d 'grading_scheme_entry[][value]=77' \\\n\n  -d 'grading_scheme_entry[][name]=C' \\\n\n  -d 'grading_scheme_entry[][value]=74' \\\n\n  -d 'grading_scheme_entry[][name]=C-' \\\n\n  -d 'grading_scheme_entry[][value]=70' \\\n\n  -d 'grading_scheme_entry[][name]=D+' \\\n\n  -d 'grading_scheme_entry[][value]=67' \\\n\n  -d 'grading_scheme_entry[][name]=D' \\\n\n  -d 'grading_scheme_entry[][value]=64' \\\n\n  -d 'grading_scheme_entry[][name]=D-' \\\n\n  -d 'grading_scheme_entry[][value]=61' \\\n\n  -d 'grading_scheme_entry[][name]=F' \\\n\n  -d 'grading_scheme_entry[][value]=0'",
+    "curl https://<canvas>/api/v1/courses/1/grading_standards/5 \\\n\n  -X DELETE \\\n\n  -H 'Authorization: Bearer <token>'",
+    "POST /api/v1/accounts/:account_id/grading_standards",
+    "url:POST|/api/v1/accounts/:account_id/grading_standards",
+    "POST /api/v1/courses/:course_id/grading_standards",
+    "url:POST|/api/v1/courses/:course_id/grading_standards",
+    "points_based",
+    "scaling_factor",
+    "grading_scheme_entry[][name]",
+    "grading_scheme_entry[][value]",
+    "GET /api/v1/courses/:course_id/grading_standards",
+    "url:GET|/api/v1/courses/:course_id/grading_standards",
+    "GET /api/v1/accounts/:account_id/grading_standards",
+    "url:GET|/api/v1/accounts/:account_id/grading_standards",
+    "GET /api/v1/courses/:course_id/grading_standards/:grading_standard_id",
+    "url:GET|/api/v1/courses/:course_id/grading_standards/:grading_standard_id",
+    "GET /api/v1/accounts/:account_id/grading_standards/:grading_standard_id",
+    "url:GET|/api/v1/accounts/:account_id/grading_standards/:grading_standard_id",
+    "PUT /api/v1/courses/:course_id/grading_standards/:grading_standard_id",
+    "url:PUT|/api/v1/courses/:course_id/grading_standards/:grading_standard_id",
+    "PUT /api/v1/accounts/:account_id/grading_standards/:grading_standard_id",
+    "url:PUT|/api/v1/accounts/:account_id/grading_standards/:grading_standard_id",
+    "DELETE /api/v1/courses/:course_id/grading_standards/:grading_standard_id",
+    "url:DELETE|/api/v1/courses/:course_id/grading_standards/:grading_standard_id",
+    "DELETE /api/v1/accounts/:account_id/grading_standards/:grading_standard_id",
+    "url:DELETE|/api/v1/accounts/:account_id/grading_standards/:grading_standard_id"
+  ]
+}

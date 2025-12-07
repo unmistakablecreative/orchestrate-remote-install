@@ -1,0 +1,126 @@
+[
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/courses",
+    "output_name": "canvas_courses"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/courses#method.courses.students",
+    "output_name": "canvas_courses#method.courses.students"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/courses#method.courses.create_file",
+    "output_name": "canvas_courses#method.courses.create_file"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/courses#method.courses.api_settings",
+    "output_name": "canvas_courses#method.courses.api_settings"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/courses#method.courses.update_settings",
+    "output_name": "canvas_courses#method.courses.update_settings"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/courses#method.courses.update",
+    "output_name": "canvas_courses#method.courses.update"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/assignments#method.assignments_api.create",
+    "output_name": "canvas_assignments#method.assignments_api.create"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/assignments#method.assignments_api.update",
+    "output_name": "canvas_assignments#method.assignments_api.update"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/assignments#method.assignments_api.index",
+    "output_name": "canvas_assignments#method.assignments_api.index"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/assignments#method.assignments.destroy",
+    "output_name": "canvas_assignments#method.assignments.destroy"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/quizzes#method.quizzes-quizzes_api.show",
+    "output_name": "canvas_quizzes#method.quizzes-quizzes_api.show"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/quizzes#method.quizzes-quizzes_api.create",
+    "output_name": "canvas_quizzes#method.quizzes-quizzes_api.create"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/quizzes#method.quizzes-quizzes_api.update",
+    "output_name": "canvas_quizzes#method.quizzes-quizzes_api.update"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/quizzes#method.quizzes-quizzes_api.destroy",
+    "output_name": "canvas_quizzes#method.quizzes-quizzes_api.destroy"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/quizzes#method.quizzes-quizzes_api.reorder",
+    "output_name": "canvas_quizzes#method.quizzes-quizzes_api.reorder"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/quiz_submission_files#method.quizzes-quiz_submission_files.create",
+    "output_name": "canvas_quiz_submission_files#method.quizzes-quiz_submission_files.create"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/quiz_questions#method.quizzes-quiz_questions.show",
+    "output_name": "canvas_quiz_questions#method.quizzes-quiz_questions.show"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/quiz_questions#method.quizzes-quiz_questions.create",
+    "output_name": "canvas_quiz_questions#method.quizzes-quiz_questions.create"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/quiz_questions#method.quizzes-quiz_questions.update",
+    "output_name": "canvas_quiz_questions#method.quizzes-quiz_questions.update"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/quiz_questions#method.quizzes-quiz_questions.destroy",
+    "output_name": "canvas_quiz_questions#method.quizzes-quiz_questions.destroy"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/quiz_submissions#method.quizzes-quiz_submissions_api.index",
+    "output_name": "canvas_quiz_submissions#method.quizzes-quiz_submissions_api.index"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/grading_standards#method.grading_standards_api.create",
+    "output_name": "canvas_grading_standards#method.grading_standards_api.create"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/grading_standards#method.grading_standards_api.context_index",
+    "output_name": "canvas_grading_standards#method.grading_standards_api.context_index"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/grading_standards#method.grading_standards_api.context_show",
+    "output_name": "canvas_grading_standards#method.grading_standards_api.context_show"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/grading_standards#method.grading_standards_api.update",
+    "output_name": "canvas_grading_standards#method.grading_standards_api.update"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/grading_standards#method.grading_standards_api.destroy",
+    "output_name": "canvas_grading_standards#method.grading_standards_api.destroy"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/modules",
+    "output_name": "canvas_modules"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/pages#method.wiki_pages_api.create",
+    "output_name": "canvas_pages#method.wiki_pages_api.create"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/pages#method.wiki_pages_api.index",
+    "output_name": "canvas_pages#method.wiki_pages_api.index"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/pages#method.wiki_pages_api.update",
+    "output_name": "canvas_pages#method.wiki_pages_api.update"
+  },
+  {
+    "url": "https://developerdocs.instructure.com/services/canvas/resources/pages#method.wiki_pages_api.destroy",
+    "output_name": "canvas_pages#method.wiki_pages_api.destroy"
+  }
+]
