@@ -5,7 +5,7 @@
 #
 # This script handles:
 # - Phase 5: Claude Code authentication
-# - Phase 6: GPT setup wizard
+# - Phase 6: GPT setup wizard (simplified - files already configured)
 # - Phase 7: Final success message
 
 set -e
@@ -18,23 +18,33 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-# Default values
+# Get script directory (where template files are)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+INSTRUCTIONS_FILE="$SCRIPT_DIR/instructions_template.json"
+YAML_FILE="$SCRIPT_DIR/openapi_template.yaml"
+
+# Load config from install script for display purposes
 ORCHESTRATE_HOME="$HOME/Orchestrate Github/orchestrate-jarvis"
 FASTAPI_PORT=5001
 NGROK_URL="NOT_AVAILABLE"
 
-# Load config from install script if available
 CONFIG_FILE="$ORCHESTRATE_HOME/.install_config"
 if [ -f "$CONFIG_FILE" ]; then
     source "$CONFIG_FILE"
 fi
 
-# Also accept ngrok URL as argument
-if [ -n "$1" ]; then
-    NGROK_URL="$1"
+# Verify template files exist
+if [ ! -f "$INSTRUCTIONS_FILE" ]; then
+    echo -e "${RED}ERROR: instructions_template.json not found at $INSTRUCTIONS_FILE${NC}"
+    echo "The install script may have failed. Please run install_orchestrate.sh first."
+    exit 1
 fi
 
-cd "$ORCHESTRATE_HOME"
+if [ ! -f "$YAML_FILE" ]; then
+    echo -e "${RED}ERROR: openapi_template.yaml not found at $YAML_FILE${NC}"
+    echo "The install script may have failed. Please run install_orchestrate.sh first."
+    exit 1
+fi
 
 # ============================================================
 # PHASE 5: CLAUDE AUTHENTICATION
@@ -76,7 +86,7 @@ fi
 echo ""
 
 # ============================================================
-# PHASE 6: GPT SETUP WIZARD
+# PHASE 6: GPT SETUP WIZARD (SIMPLIFIED)
 # ============================================================
 
 clear
@@ -87,66 +97,11 @@ echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 echo "Now let's set up your Custom GPT. This takes about 2 minutes."
 echo ""
-read -p "Press ENTER to continue..."
-
-# Extract domain from ngrok URL
-if [ "$NGROK_URL" != "NOT_AVAILABLE" ]; then
-    NGROK_DOMAIN=$(echo "$NGROK_URL" | sed 's|^https\?://||' | sed 's|/$||')
-else
-    clear
-    echo ""
-    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${CYAN}📋 Get Your ngrok Domain${NC}"
-    echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo ""
-    echo "We couldn't detect your ngrok domain automatically."
-    echo "It should look like this:"
-    echo ""
-    echo "  upright-constantly-grub.ngrok-free.app"
-    echo ""
-    read -p "Enter your ngrok domain: " NGROK_DOMAIN
-
-    # Clean up the domain
-    NGROK_DOMAIN=$(echo "$NGROK_DOMAIN" | sed 's|^https\?://||' | sed 's|/$||')
-
-    # Validate domain format
-    if [[ ! $NGROK_DOMAIN =~ \.ngrok-free\.app$ ]]; then
-        echo ""
-        echo -e "${YELLOW}⚠️  That doesn't look right. It should end with .ngrok-free.app${NC}"
-        echo ""
-        read -p "Try again - Enter your ngrok domain: " NGROK_DOMAIN
-        NGROK_DOMAIN=$(echo "$NGROK_DOMAIN" | sed 's|^https\?://||' | sed 's|/$||')
-    fi
-
-    NGROK_URL="https://$NGROK_DOMAIN"
-fi
-
-# Update template files with ngrok URL
-INSTRUCTIONS_FILE="$ORCHESTRATE_HOME/instructions_template.json"
-YAML_FILE="$ORCHESTRATE_HOME/openapi_template.yaml"
-
-# Create safe domain string for GPT action names (replace dots and hyphens)
-SAFE_DOMAIN=$(echo "$NGROK_DOMAIN" | sed 's/[.-]/_/g')
-
+echo -e "${GREEN}✓ Your configuration files are already set up!${NC}"
 echo ""
-echo "Updating configuration with your domain..."
+read -p "Press ENTER to start..."
 
-# Update instructions template with safe domain
-if [ -f "$INSTRUCTIONS_FILE" ]; then
-    sed -i '' "s|\${SAFE_DOMAIN}|$SAFE_DOMAIN|g" "$INSTRUCTIONS_FILE" 2>/dev/null || \
-    sed "s|\${SAFE_DOMAIN}|$SAFE_DOMAIN|g" "$INSTRUCTIONS_FILE" > "$INSTRUCTIONS_FILE.tmp" && mv "$INSTRUCTIONS_FILE.tmp" "$INSTRUCTIONS_FILE"
-fi
-
-# Update YAML file with ngrok URL
-if [ -f "$YAML_FILE" ]; then
-    sed -i '' "s|\$DOMAIN|$NGROK_DOMAIN|g" "$YAML_FILE" 2>/dev/null || \
-    sed "s|\$DOMAIN|$NGROK_DOMAIN|g" "$YAML_FILE" > "$YAML_FILE.tmp" && mv "$YAML_FILE.tmp" "$YAML_FILE"
-fi
-
-echo -e "${GREEN}✓ Configuration updated${NC}"
-sleep 1
-
-# Open GPT Editor
+# Step 1: Open GPT Editor
 clear
 echo ""
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -167,7 +122,7 @@ echo -e "${GREEN}✓ Browser opened${NC}"
 echo ""
 read -p "Press ENTER when you see the GPT editor..."
 
-# Paste Instructions
+# Step 2: Three Copy/Pastes
 clear
 echo ""
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -181,19 +136,15 @@ echo "Ready? Let's go! 💪"
 echo ""
 read -p "Press ENTER to continue..."
 
-# Part 1: Instructions
+# Paste #1: Instructions
 clear
 echo ""
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${CYAN}📋 Paste #1: Instructions${NC}"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
-if [ -f "$INSTRUCTIONS_FILE" ]; then
-    cat "$INSTRUCTIONS_FILE" | pbcopy 2>/dev/null || xclip -selection clipboard < "$INSTRUCTIONS_FILE" 2>/dev/null || true
-    echo -e "${GREEN}✓ Copied instructions to your clipboard!${NC}"
-else
-    echo -e "${YELLOW}⚠ Instructions file not found${NC}"
-fi
+cat "$INSTRUCTIONS_FILE" | pbcopy 2>/dev/null || xclip -selection clipboard < "$INSTRUCTIONS_FILE" 2>/dev/null || true
+echo -e "${GREEN}✓ Copied instructions to your clipboard!${NC}"
 echo ""
 echo "Now in your browser:"
 echo ""
@@ -206,7 +157,7 @@ echo "  6. Press Command+V (Mac) or Ctrl+V (Windows)"
 echo ""
 read -p "Press ENTER after you paste..."
 
-# Part 2: Conversation Starter
+# Paste #2: Conversation Starter
 clear
 echo ""
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -224,19 +175,15 @@ echo "  3. Press Command+V (Mac) or Ctrl+V (Windows)"
 echo ""
 read -p "Press ENTER after you paste..."
 
-# Part 3: OpenAPI Schema
+# Paste #3: OpenAPI Schema
 clear
 echo ""
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${CYAN}🔌 Paste #3: API Connection${NC}"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
-if [ -f "$YAML_FILE" ]; then
-    cat "$YAML_FILE" | pbcopy 2>/dev/null || xclip -selection clipboard < "$YAML_FILE" 2>/dev/null || true
-    echo -e "${GREEN}✓ Copied API schema to your clipboard!${NC}"
-else
-    echo -e "${YELLOW}⚠ YAML file not found${NC}"
-fi
+cat "$YAML_FILE" | pbcopy 2>/dev/null || xclip -selection clipboard < "$YAML_FILE" 2>/dev/null || true
+echo -e "${GREEN}✓ Copied API schema to your clipboard!${NC}"
 echo ""
 echo "Now in your browser:"
 echo ""
@@ -249,7 +196,7 @@ echo "  6. Click the 'Save' button (top right)"
 echo ""
 read -p "Press ENTER after you paste and save..."
 
-# Test
+# Step 3: Test
 clear
 echo ""
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"

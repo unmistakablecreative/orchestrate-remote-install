@@ -113,6 +113,32 @@ else
 fi
 cd "$ORCHESTRATE_HOME"
 
+# ============================================================
+# IMMEDIATELY AFTER CLONE: Domain replacement in template files
+# ============================================================
+if [ -n "$NGROK_DOMAIN" ]; then
+    echo "Configuring template files with domain: $NGROK_DOMAIN"
+
+    # Create safe domain string (replace dots and hyphens with underscores)
+    SAFE_DOMAIN=$(echo "$NGROK_DOMAIN" | sed 's/[.-]/_/g')
+
+    # Update openapi_template.yaml - replace $DOMAIN with actual domain
+    if [ -f "$ORCHESTRATE_HOME/openapi_template.yaml" ]; then
+        sed -i '' "s|\\\$DOMAIN|$NGROK_DOMAIN|g" "$ORCHESTRATE_HOME/openapi_template.yaml" 2>/dev/null || \
+        sed "s|\\\$DOMAIN|$NGROK_DOMAIN|g" "$ORCHESTRATE_HOME/openapi_template.yaml" > "$ORCHESTRATE_HOME/openapi_template.yaml.tmp" && \
+        mv "$ORCHESTRATE_HOME/openapi_template.yaml.tmp" "$ORCHESTRATE_HOME/openapi_template.yaml"
+        echo -e "  ${GREEN}✓${NC} Updated openapi_template.yaml"
+    fi
+
+    # Update instructions_template.json - replace ${SAFE_DOMAIN} with underscored version
+    if [ -f "$ORCHESTRATE_HOME/instructions_template.json" ]; then
+        sed -i '' "s|\${SAFE_DOMAIN}|$SAFE_DOMAIN|g" "$ORCHESTRATE_HOME/instructions_template.json" 2>/dev/null || \
+        sed "s|\${SAFE_DOMAIN}|$SAFE_DOMAIN|g" "$ORCHESTRATE_HOME/instructions_template.json" > "$ORCHESTRATE_HOME/instructions_template.json.tmp" && \
+        mv "$ORCHESTRATE_HOME/instructions_template.json.tmp" "$ORCHESTRATE_HOME/instructions_template.json"
+        echo -e "  ${GREEN}✓${NC} Updated instructions_template.json"
+    fi
+fi
+
 # Step 4: Install Python dependencies (HEAVY - pip install)
 echo -e "${YELLOW}[4/8] Installing Python dependencies...${NC}"
 if command -v pip3 &> /dev/null; then
