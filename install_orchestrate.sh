@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 RED='\033[0;31m'
@@ -13,6 +12,7 @@ NGROK_TOKEN=""
 NGROK_DOMAIN=""
 FASTAPI_PORT=5001
 
+# Parse args
 while [[ $# -gt 0 ]]; do
     case $1 in
         --ngrok-token) NGROK_TOKEN="$2"; shift 2 ;;
@@ -21,6 +21,11 @@ while [[ $# -gt 0 ]]; do
         *) echo -e "${RED}Unknown option: $1${NC}"; exit 1 ;;
     esac
 done
+
+echo -e "${GREEN}╔════════════════════════════════════════════════════════════╗${NC}"
+echo -e "${GREEN}║         OrchestrateOS Remote Install Script                 ║${NC}"
+echo -e "${GREEN}╚════════════════════════════════════════════════════════════╝${NC}"
+echo ""
 
 echo -e "${GREEN}[1/10] Checking Xcode Command Line Tools...${NC}"
 if ! xcode-select -p &>/dev/null; then
@@ -70,12 +75,6 @@ else
     git clone "$GITHUB_REPO" "$ORCHESTRATE_HOME"
 fi
 cd "$ORCHESTRATE_HOME"
-
-if [ -n "$NGROK_DOMAIN" ]; then
-    SAFE_DOMAIN=$(echo "$NGROK_DOMAIN" | sed 's/[.-]/_/g')
-    sed -i '' "s|\\\$DOMAIN|$NGROK_DOMAIN|g" "$ORCHESTRATE_HOME/openapi_template.yaml" 2>/dev/null || true
-    sed -i '' "s|\${SAFE_DOMAIN}|$SAFE_DOMAIN|g" "$ORCHESTRATE_HOME/instructions_template.json" 2>/dev/null || true
-fi
 
 echo -e "${GREEN}[8/10] Installing Python dependencies...${NC}"
 pip3 install -r requirements.txt
