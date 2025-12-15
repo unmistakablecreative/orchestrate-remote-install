@@ -1,0 +1,94 @@
+{
+  "title": "AI Conference 2025",
+  "dates": "March 15-17, 2025",
+  "location": "Los Angeles, CA",
+  "cta_text": "Register Now",
+  "cta_link": "#register",
+  "description": "Join the most forward-thinking minds in AI for three days of breakthrough insights, hands-on workshops, and networking with pioneers shaping the future of artificial intelligence. Attendees will learn cutting-edge techniques for deploying AI agents in production, explore ethical frameworks for responsible AI development, and discover creative applications transforming industries. Our hands-on workshops provide practical skills you can apply immediately, while networking sessions connect you directly with industry leaders and potential collaborators. Whether you're an executive, developer, or researcher, you'll leave with actionable insights and valuable connections.",
+  "speakers": [
+    {
+      "name": "Dr. Sarah Chen",
+      "title": "AI Research Director, Stanford",
+      "bio": "Leading researcher in human-AI collaboration and creative intelligence systems",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Marcus Johnson",
+      "title": "CEO, Autonomous Systems Inc.",
+      "bio": "Pioneer in deploying AI agents for enterprise automation and workflow optimization",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Dr. Priya Patel",
+      "title": "Head of AI Ethics, MIT",
+      "bio": "Expert on responsible AI development and algorithmic fairness",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "James Rodriguez",
+      "title": "Founder, CreativeAI Labs",
+      "bio": "Building AI-powered creative tools for designers and artists",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Emily Zhang",
+      "title": "VP of Product, DeepMind",
+      "bio": "Leading development of next-generation language models",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Robert Martinez",
+      "title": "CTO, Salesforce AI",
+      "bio": "Scaling AI infrastructure for enterprise customers",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Dr. Lisa Kumar",
+      "title": "Research Scientist, OpenAI",
+      "bio": "Advancing multimodal AI capabilities",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "David Park",
+      "title": "Founder, Neural Networks Inc.",
+      "bio": "Building AI tools for creative professionals",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Jessica Williams",
+      "title": "Chief AI Officer, Meta",
+      "bio": "Developing responsible AI frameworks",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Michael Chang",
+      "title": "Director of Engineering, Google AI",
+      "bio": "Leading large-scale ML infrastructure projects",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Dr. Amanda Foster",
+      "title": "AI Ethics Lead, Microsoft",
+      "bio": "Ensuring fairness in AI systems",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Brian Thompson",
+      "title": "CEO, AIStartup Labs",
+      "bio": "Bringing AI innovation to market",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Dr. Sarah O'Connor",
+      "title": "Professor, Berkeley AI Lab",
+      "bio": "Research in reinforcement learning",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "James Lee",
+      "title": "VP Engineering, Anthropic",
+      "bio": "Building safe and beneficial AI systems",
+      "image": "https://via.placeholder.com/150"
+    }
+  ]
+}

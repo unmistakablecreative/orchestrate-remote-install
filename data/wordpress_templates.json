@@ -1,0 +1,31 @@
+{
+  "speaker": {
+    "type": "page",
+    "content_template": "<div class=\"speaker-profile\">\n  <img src=\"{{photo_url}}\" alt=\"{{name}}\">\n  <h1>{{name}}</h1>\n  <div class=\"bio\">{{bio}}</div>\n  <div class=\"social\">{{social_links}}</div>\n</div>"
+  },
+  "sponsor": {
+    "type": "page",
+    "content_template": "<div class=\"sponsor\">\n  <img src=\"{{logo_url}}\" alt=\"{{company}}\">\n  <h1>{{company}}</h1>\n  <div class=\"description\">{{description}}</div>\n</div>"
+  },
+  "event": {
+    "type": "page",
+    "content_template": "<div class=\"event\">\n  <h1>{{title}}</h1>\n  <div class=\"date\">{{date}}</div>\n  <div class=\"details\">{{details}}</div>\n</div>"
+  },
+  "post": {
+    "type": "post",
+    "content_template": "{{content}}"
+  },
+  "page": {
+    "type": "page",
+    "content_template": "{{content}}"
+  },
+  "conference-speaker": {
+    "type": "page",
+    "content_template": "<div class=\"speaker-profile\">\n  <div class=\"speaker-headshot\">\n    <img src=\"{{headshot_url}}\" alt=\"{{name}}\">\n  </div>\n  <div class=\"speaker-info\">\n    <h1 class=\"speaker-name\">{{name}}</h1>\n    <h2 class=\"speaker-title\">{{title}}</h2>\n    <div class=\"speaker-bio\">{{bio}}</div>\n    <div class=\"speaker-session\">\n      <h3>Session</h3>\n      <p class=\"session-title\">{{session_title}}</p>\n      <p class=\"session-time\">{{session_time}}</p>\n    </div>\n  </div>\n</div>"
+  },
+  "landing-page": {
+    "type": "page",
+    "content_template": "<style>header, nav, .site-header, .page-title, .entry-title, .tcb-page-title, .tve-page-title, .ast-page-title, .elementor-page-title { display: none !important; } body { margin: 0; padding: 0; }</style>\n<div style=\"width: 100%; margin: 0; padding: 0;\">\n  <!-- Hero Section -->\n  <div style=\"background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 500px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 20px;\">\n    <h1 style=\"color: white; font-size: 72px; font-weight: bold; margin: 0 0 20px 0; line-height: 1.1;\">{{title}}</h1>\n    <p style=\"color: white; font-size: 24px; margin: 0 0 30px 0;\">{{subtitle}}</p>\n    <a href=\"{{cta_url}}\" style=\"display: inline-block; background: white; color: #667eea; font-size: 18px; font-weight: bold; padding: 20px 40px; border-radius: 8px; text-decoration: none;\">{{cta_text}}</a>\n  </div>\n  \n  <!-- Description Section -->\n  <div style=\"max-width: 800px; margin: 60px auto; padding: 0 20px; text-align: center;\">\n    <p style=\"font-size: 20px; line-height: 1.6; color: #333;\">{{description}}</p>\n  </div>\n  \n  <!-- Speakers Section -->\n  <div style=\"background: #f8f9fa; padding: 60px 20px;\">\n    <h2 style=\"text-align: center; font-size: 42px; margin: 0 0 40px 0; color: #333;\">Speakers</h2>\n    <div style=\"display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: 1000px; margin: 0 auto;\">{{speakers_html}}</div>\n  </div>\n</div>",
+    "speaker_card_template": "<div style=\"background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);\">\n  <h3 style=\"font-size: 24px; margin: 0 0 8px 0; color: #333;\">{{name}}</h3>\n  <p style=\"font-size: 16px; color: #667eea; margin: 0 0 15px 0; font-weight: 500;\">{{title}}</p>\n  <p style=\"font-size: 14px; line-height: 1.5; color: #666; margin: 0;\">{{bio}}</p>\n</div>"
+  }
+}
