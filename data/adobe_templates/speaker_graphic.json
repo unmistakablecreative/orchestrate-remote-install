@@ -1,0 +1,180 @@
+{
+  "template_name": "speaker_graphic",
+  "description": "Speaker introduction graphic with headshot, name, and title. Suitable for event slides, webinar intros, and social media.",
+  "format": {
+    "type": "landscape",
+    "width": 1920,
+    "height": 1080,
+    "alternative_sizes": {
+      "square": {"width": 1080, "height": 1080},
+      "portrait": {"width": 1080, "height": 1350}
+    }
+  },
+  "variables": {
+    "speaker_name": {
+      "type": "string",
+      "required": true,
+      "example": "Srinivas Rao"
+    },
+    "speaker_title": {
+      "type": "string",
+      "required": true,
+      "example": "CEO & Founder, OrchestrateOS"
+    },
+    "headshot_path": {
+      "type": "file_path",
+      "required": true,
+      "example": "/Users/srinivas/Orchestrate Github/orchestrate-jarvis/adobe_test_assets/srini_headshot.png"
+    },
+    "gradient_start": {
+      "type": "color",
+      "required": false,
+      "default": "#1a1a2e"
+    },
+    "gradient_end": {
+      "type": "color",
+      "required": false,
+      "default": "#16213e"
+    },
+    "accent_color": {
+      "type": "color",
+      "required": false,
+      "default": "#4ecdc4"
+    },
+    "output_path": {
+      "type": "file_path",
+      "required": true,
+      "example": "/Users/srinivas/Orchestrate Github/orchestrate-jarvis/exports/speaker_srini.png"
+    }
+  },
+  "operation_sequence": {
+    "app": "photoshop",
+    "operations": [
+      {
+        "fn": "createDocument",
+        "width": "{{width}}",
+        "height": "{{height}}",
+        "name": "speaker_graphic",
+        "colorMode": "RGB"
+      },
+      {
+        "fn": "applyGradient",
+        "layer": "Background",
+        "startColor": "{{gradient_start}}",
+        "endColor": "{{gradient_end}}",
+        "angle": 135
+      },
+      {
+        "fn": "addShapeLayer",
+        "type": "ellipse",
+        "params": {
+          "x": 480,
+          "y": 540,
+          "width": 500,
+          "height": 500,
+          "fillColor": "{{accent_color}}"
+        },
+        "comment": "Decorative accent circle behind headshot"
+      },
+      {
+        "fn": "importImage",
+        "path": "{{headshot_path}}",
+        "x": 200,
+        "y": 190,
+        "width": 700,
+        "height": 700,
+        "removeBackground": true,
+        "comment": "Headshot with background removal"
+      },
+      {
+        "fn": "applyEffect",
+        "layer": "imported_image",
+        "effectName": "dropShadow",
+        "params": {
+          "opacity": 40,
+          "distance": 20,
+          "blur": 40,
+          "color": "#000000"
+        }
+      },
+      {
+        "fn": "addTextLayer",
+        "text": "{{speaker_name}}",
+        "font": "Montserrat-Bold",
+        "size": 96,
+        "color": "#ffffff",
+        "x": 1000,
+        "y": 450
+      },
+      {
+        "fn": "applyEffect",
+        "layer": "{{speaker_name}}",
+        "effectName": "dropShadow",
+        "params": {
+          "opacity": 30,
+          "distance": 5,
+          "blur": 10
+        }
+      },
+      {
+        "fn": "addShapeLayer",
+        "type": "rectangle",
+        "params": {
+          "x": 1000,
+          "y": 520,
+          "width": 100,
+          "height": 4,
+          "fillColor": "{{accent_color}}"
+        },
+        "comment": "Accent line under name"
+      },
+      {
+        "fn": "addTextLayer",
+        "text": "{{speaker_title}}",
+        "font": "Montserrat-Regular",
+        "size": 42,
+        "color": "#cccccc",
+        "x": 1000,
+        "y": 600
+      },
+      {
+        "fn": "exportPNG",
+        "path": "{{output_path}}"
+      }
+    ],
+    "output": "{{output_path}}"
+  },
+  "example_usage": {
+    "app": "photoshop",
+    "operations": [
+      {"fn": "createDocument", "width": 1920, "height": 1080, "name": "speaker_graphic", "colorMode": "RGB"},
+      {"fn": "applyGradient", "layer": "Background", "startColor": "#1a1a2e", "endColor": "#16213e", "angle": 135},
+      {"fn": "addShapeLayer", "type": "ellipse", "params": {"x": 480, "y": 540, "width": 500, "height": 500, "fillColor": "#4ecdc4"}},
+      {"fn": "importImage", "path": "/Users/srinivas/Orchestrate Github/orchestrate-jarvis/adobe_test_assets/srini_headshot.png", "x": 200, "y": 190, "width": 700, "height": 700, "removeBackground": true},
+      {"fn": "applyEffect", "layer": "imported_image", "effectName": "dropShadow", "params": {"opacity": 40, "distance": 20, "blur": 40, "color": "#000000"}},
+      {"fn": "addTextLayer", "text": "Srinivas Rao", "font": "Montserrat-Bold", "size": 96, "color": "#ffffff", "x": 1000, "y": 450},
+      {"fn": "applyEffect", "layer": "Srinivas Rao", "effectName": "dropShadow", "params": {"opacity": 30, "distance": 5, "blur": 10}},
+      {"fn": "addShapeLayer", "type": "rectangle", "params": {"x": 1000, "y": 520, "width": 100, "height": 4, "fillColor": "#4ecdc4"}},
+      {"fn": "addTextLayer", "text": "CEO & Founder, OrchestrateOS", "font": "Montserrat-Regular", "size": 42, "color": "#cccccc", "x": 1000, "y": 600},
+      {"fn": "exportPNG", "path": "/Users/srinivas/Orchestrate Github/orchestrate-jarvis/exports/speaker_srini.png"}
+    ],
+    "output": "/Users/srinivas/Orchestrate Github/orchestrate-jarvis/exports/speaker_srini.png"
+  },
+  "square_variant": {
+    "description": "Square version for social media (1080x1080)",
+    "app": "photoshop",
+    "operations": [
+      {"fn": "createDocument", "width": 1080, "height": 1080, "name": "speaker_graphic_square", "colorMode": "RGB"},
+      {"fn": "applyGradient", "layer": "Background", "startColor": "#1a1a2e", "endColor": "#16213e", "angle": 135},
+      {"fn": "addShapeLayer", "type": "ellipse", "params": {"x": 540, "y": 350, "width": 400, "height": 400, "fillColor": "#4ecdc4"}},
+      {"fn": "importImage", "path": "{{headshot_path}}", "x": 290, "y": 100, "width": 500, "height": 500, "removeBackground": true},
+      {"fn": "applyEffect", "layer": "imported_image", "effectName": "dropShadow", "params": {"opacity": 40, "distance": 15, "blur": 30, "color": "#000000"}},
+      {"fn": "addTextLayer", "text": "{{speaker_name}}", "font": "Montserrat-Bold", "size": 72, "color": "#ffffff", "x": 540, "y": 720, "alignment": "center"},
+      {"fn": "addShapeLayer", "type": "rectangle", "params": {"x": 490, "y": 770, "width": 100, "height": 4, "fillColor": "#4ecdc4"}},
+      {"fn": "addTextLayer", "text": "{{speaker_title}}", "font": "Montserrat-Regular", "size": 32, "color": "#cccccc", "x": 540, "y": 850, "alignment": "center"},
+      {"fn": "exportPNG", "path": "{{output_path}}"}
+    ]
+  },
+  "created_at": "2025-12-16",
+  "version": "1.0"
+}

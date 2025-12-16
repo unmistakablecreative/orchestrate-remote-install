@@ -1,0 +1,167 @@
+{
+  "template_name": "hlwd_sponsor_announcement",
+  "description": "Hollywood Launched sponsor announcement graphic with centered logo, sponsor name, and tier. Dark navy background with gold accent.",
+  "format": {
+    "type": "landscape",
+    "width": 1920,
+    "height": 1080,
+    "alternative_sizes": {
+      "square": {"width": 1080, "height": 1080},
+      "story": {"width": 1080, "height": 1920}
+    }
+  },
+  "variables": {
+    "sponsor_name": {
+      "type": "string",
+      "required": true,
+      "example": "Acme Studios"
+    },
+    "sponsor_tier": {
+      "type": "string",
+      "required": true,
+      "example": "Gold Sponsor"
+    },
+    "logo_path": {
+      "type": "file_path",
+      "required": true,
+      "example": "/Users/srinivas/Orchestrate Github/orchestrate-jarvis/adobe_test_assets/sponsor_logo.png"
+    },
+    "background_color": {
+      "type": "color",
+      "required": false,
+      "default": "#0a1628"
+    },
+    "accent_color": {
+      "type": "color",
+      "required": false,
+      "default": "#d4af37"
+    },
+    "output_path": {
+      "type": "file_path",
+      "required": true,
+      "example": "/Users/srinivas/Orchestrate Github/orchestrate-jarvis/exports/hlwd_sponsor_acme.png"
+    }
+  },
+  "operation_sequence": {
+    "app": "photoshop",
+    "operations": [
+      {
+        "fn": "createDocument",
+        "width": "{{width}}",
+        "height": "{{height}}",
+        "name": "hlwd_sponsor_announcement",
+        "colorMode": "RGB"
+      },
+      {
+        "fn": "fillLayer",
+        "layer": "Background",
+        "color": "{{background_color}}",
+        "comment": "Dark navy background"
+      },
+      {
+        "fn": "addTextLayer",
+        "text": "HOLLYWOOD LAUNCHED",
+        "font": "Montserrat-Bold",
+        "size": 36,
+        "color": "#888888",
+        "x": 960,
+        "y": 120,
+        "alignment": "center",
+        "comment": "Event branding at top"
+      },
+      {
+        "fn": "importImage",
+        "path": "{{logo_path}}",
+        "x": 560,
+        "y": 240,
+        "width": 800,
+        "height": 400,
+        "preserveAspectRatio": true,
+        "comment": "Centered sponsor logo"
+      },
+      {
+        "fn": "addShapeLayer",
+        "type": "rectangle",
+        "params": {
+          "x": 760,
+          "y": 680,
+          "width": 400,
+          "height": 4,
+          "fillColor": "{{accent_color}}"
+        },
+        "comment": "Gold accent line"
+      },
+      {
+        "fn": "addTextLayer",
+        "text": "{{sponsor_name}}",
+        "font": "Montserrat-Bold",
+        "size": 72,
+        "color": "#ffffff",
+        "x": 960,
+        "y": 760,
+        "alignment": "center",
+        "comment": "Sponsor name in white"
+      },
+      {
+        "fn": "addTextLayer",
+        "text": "{{sponsor_tier}}",
+        "font": "Montserrat-Regular",
+        "size": 42,
+        "color": "#b0b0b0",
+        "x": 960,
+        "y": 850,
+        "alignment": "center",
+        "comment": "Sponsor tier in light gray"
+      },
+      {
+        "fn": "addShapeLayer",
+        "type": "rectangle",
+        "params": {
+          "x": 860,
+          "y": 920,
+          "width": 200,
+          "height": 3,
+          "fillColor": "{{accent_color}}"
+        },
+        "comment": "Bottom gold accent line"
+      },
+      {
+        "fn": "exportPNG",
+        "path": "{{output_path}}"
+      }
+    ],
+    "output": "{{output_path}}"
+  },
+  "example_usage": {
+    "app": "photoshop",
+    "operations": [
+      {"fn": "createDocument", "width": 1920, "height": 1080, "name": "hlwd_sponsor_announcement", "colorMode": "RGB"},
+      {"fn": "fillLayer", "layer": "Background", "color": "#0a1628"},
+      {"fn": "addTextLayer", "text": "HOLLYWOOD LAUNCHED", "font": "Montserrat-Bold", "size": 36, "color": "#888888", "x": 960, "y": 120, "alignment": "center"},
+      {"fn": "importImage", "path": "/path/to/sponsor_logo.png", "x": 560, "y": 240, "width": 800, "height": 400, "preserveAspectRatio": true},
+      {"fn": "addShapeLayer", "type": "rectangle", "params": {"x": 760, "y": 680, "width": 400, "height": 4, "fillColor": "#d4af37"}},
+      {"fn": "addTextLayer", "text": "Acme Studios", "font": "Montserrat-Bold", "size": 72, "color": "#ffffff", "x": 960, "y": 760, "alignment": "center"},
+      {"fn": "addTextLayer", "text": "Gold Sponsor", "font": "Montserrat-Regular", "size": 42, "color": "#b0b0b0", "x": 960, "y": 850, "alignment": "center"},
+      {"fn": "addShapeLayer", "type": "rectangle", "params": {"x": 860, "y": 920, "width": 200, "height": 3, "fillColor": "#d4af37"}},
+      {"fn": "exportPNG", "path": "/Users/srinivas/Orchestrate Github/orchestrate-jarvis/exports/hlwd_sponsor_acme.png"}
+    ],
+    "output": "/Users/srinivas/Orchestrate Github/orchestrate-jarvis/exports/hlwd_sponsor_acme.png"
+  },
+  "square_variant": {
+    "description": "Square version for social media (1080x1080)",
+    "app": "photoshop",
+    "operations": [
+      {"fn": "createDocument", "width": 1080, "height": 1080, "name": "hlwd_sponsor_square", "colorMode": "RGB"},
+      {"fn": "fillLayer", "layer": "Background", "color": "{{background_color}}"},
+      {"fn": "addTextLayer", "text": "HOLLYWOOD LAUNCHED", "font": "Montserrat-Bold", "size": 28, "color": "#888888", "x": 540, "y": 80, "alignment": "center"},
+      {"fn": "importImage", "path": "{{logo_path}}", "x": 190, "y": 180, "width": 700, "height": 350, "preserveAspectRatio": true},
+      {"fn": "addShapeLayer", "type": "rectangle", "params": {"x": 390, "y": 580, "width": 300, "height": 4, "fillColor": "{{accent_color}}"}},
+      {"fn": "addTextLayer", "text": "{{sponsor_name}}", "font": "Montserrat-Bold", "size": 56, "color": "#ffffff", "x": 540, "y": 680, "alignment": "center"},
+      {"fn": "addTextLayer", "text": "{{sponsor_tier}}", "font": "Montserrat-Regular", "size": 36, "color": "#b0b0b0", "x": 540, "y": 760, "alignment": "center"},
+      {"fn": "addShapeLayer", "type": "rectangle", "params": {"x": 440, "y": 850, "width": 200, "height": 3, "fillColor": "{{accent_color}}"}},
+      {"fn": "exportPNG", "path": "{{output_path}}"}
+    ]
+  },
+  "created_at": "2025-12-16",
+  "version": "1.0"
+}

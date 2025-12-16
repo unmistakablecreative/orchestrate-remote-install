@@ -1,0 +1,236 @@
+{
+  "template_name": "hlwd_speaker_announcement",
+  "description": "Hollywood/premium speaker announcement graphic with elegant dark navy background, gold accents, and clean typography. Perfect for conference speaker reveals, event announcements, and high-end webinar promotions.",
+  "format": {
+    "type": "landscape",
+    "width": 1920,
+    "height": 1080,
+    "alternative_sizes": {
+      "square": {"width": 1080, "height": 1080},
+      "portrait": {"width": 1080, "height": 1350}
+    }
+  },
+  "brand": {
+    "primary_color": "#0a1628",
+    "accent_color": "#d4af37",
+    "text_color": "#ffffff",
+    "style": "hollywood_premium"
+  },
+  "variables": {
+    "speaker_name": {
+      "type": "string",
+      "required": true,
+      "example": "Srinivas Rao"
+    },
+    "speaker_title": {
+      "type": "string",
+      "required": true,
+      "example": "CEO & Founder, OrchestrateOS"
+    },
+    "headshot_path": {
+      "type": "file_path",
+      "required": true,
+      "example": "{{DATA_DIR}}/adobe_test_assets/srini_headshot.png"
+    },
+    "output_path": {
+      "type": "file_path",
+      "required": true,
+      "example": "{{EXPORTS_DIR}}/hlwd_speaker_{{speaker_name}}.png"
+    }
+  },
+  "operation_sequence": {
+    "app": "photoshop",
+    "operations": [
+      {
+        "fn": "createDocument",
+        "width": "{{width}}",
+        "height": "{{height}}",
+        "name": "hlwd_speaker_announcement",
+        "colorMode": "RGB"
+      },
+      {
+        "fn": "applyGradient",
+        "layer": "Background",
+        "startColor": "#0a1628",
+        "endColor": "#0d1f38",
+        "angle": 145,
+        "comment": "Deep navy gradient for Hollywood premium feel"
+      },
+      {
+        "fn": "addShapeLayer",
+        "type": "rectangle",
+        "params": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080,
+          "fillColor": "#0a1628",
+          "opacity": 15
+        },
+        "comment": "Subtle noise overlay for texture"
+      },
+      {
+        "fn": "addShapeLayer",
+        "type": "ellipse",
+        "params": {
+          "x": 480,
+          "y": 540,
+          "width": 520,
+          "height": 520,
+          "strokeColor": "#d4af37",
+          "strokeWidth": 3,
+          "fillColor": "transparent"
+        },
+        "comment": "Gold accent ring behind headshot"
+      },
+      {
+        "fn": "addShapeLayer",
+        "type": "ellipse",
+        "params": {
+          "x": 480,
+          "y": 540,
+          "width": 480,
+          "height": 480,
+          "fillColor": "#0d1f38"
+        },
+        "comment": "Inner circle for headshot background"
+      },
+      {
+        "fn": "importImage",
+        "path": "{{headshot_path}}",
+        "x": 230,
+        "y": 190,
+        "width": 500,
+        "height": 700,
+        "removeBackground": true,
+        "comment": "Headshot with background removal, positioned left"
+      },
+      {
+        "fn": "applyEffect",
+        "layer": "imported_image",
+        "effectName": "dropShadow",
+        "params": {
+          "opacity": 50,
+          "distance": 25,
+          "blur": 50,
+          "color": "#000000"
+        },
+        "comment": "Dramatic shadow for depth"
+      },
+      {
+        "fn": "addShapeLayer",
+        "type": "rectangle",
+        "params": {
+          "x": 950,
+          "y": 420,
+          "width": 80,
+          "height": 4,
+          "fillColor": "#d4af37"
+        },
+        "comment": "Gold accent line above name"
+      },
+      {
+        "fn": "addTextLayer",
+        "text": "{{speaker_name}}",
+        "font": "Playfair Display-Bold",
+        "size": 88,
+        "color": "#ffffff",
+        "x": 950,
+        "y": 500,
+        "letterSpacing": 2,
+        "comment": "Speaker name in elegant serif"
+      },
+      {
+        "fn": "applyEffect",
+        "layer": "{{speaker_name}}",
+        "effectName": "dropShadow",
+        "params": {
+          "opacity": 25,
+          "distance": 4,
+          "blur": 8
+        }
+      },
+      {
+        "fn": "addShapeLayer",
+        "type": "rectangle",
+        "params": {
+          "x": 950,
+          "y": 560,
+          "width": 120,
+          "height": 3,
+          "fillColor": "#d4af37"
+        },
+        "comment": "Gold divider line"
+      },
+      {
+        "fn": "addTextLayer",
+        "text": "{{speaker_title}}",
+        "font": "Montserrat-Light",
+        "size": 36,
+        "color": "#d4af37",
+        "x": 950,
+        "y": 620,
+        "letterSpacing": 3,
+        "comment": "Title in gold for premium feel"
+      },
+      {
+        "fn": "addShapeLayer",
+        "type": "rectangle",
+        "params": {
+          "x": 60,
+          "y": 60,
+          "width": 1800,
+          "height": 960,
+          "strokeColor": "#d4af37",
+          "strokeWidth": 1,
+          "fillColor": "transparent",
+          "opacity": 30
+        },
+        "comment": "Subtle gold border frame"
+      },
+      {
+        "fn": "exportPNG",
+        "path": "{{output_path}}"
+      }
+    ],
+    "output": "{{output_path}}"
+  },
+  "example_usage": {
+    "app": "photoshop",
+    "operations": [
+      {"fn": "createDocument", "width": 1920, "height": 1080, "name": "hlwd_speaker_announcement", "colorMode": "RGB"},
+      {"fn": "applyGradient", "layer": "Background", "startColor": "#0a1628", "endColor": "#0d1f38", "angle": 145},
+      {"fn": "addShapeLayer", "type": "ellipse", "params": {"x": 480, "y": 540, "width": 520, "height": 520, "strokeColor": "#d4af37", "strokeWidth": 3, "fillColor": "transparent"}},
+      {"fn": "addShapeLayer", "type": "ellipse", "params": {"x": 480, "y": 540, "width": 480, "height": 480, "fillColor": "#0d1f38"}},
+      {"fn": "importImage", "path": "/path/to/headshot.png", "x": 230, "y": 190, "width": 500, "height": 700, "removeBackground": true},
+      {"fn": "applyEffect", "layer": "imported_image", "effectName": "dropShadow", "params": {"opacity": 50, "distance": 25, "blur": 50, "color": "#000000"}},
+      {"fn": "addShapeLayer", "type": "rectangle", "params": {"x": 950, "y": 420, "width": 80, "height": 4, "fillColor": "#d4af37"}},
+      {"fn": "addTextLayer", "text": "Speaker Name", "font": "Playfair Display-Bold", "size": 88, "color": "#ffffff", "x": 950, "y": 500, "letterSpacing": 2},
+      {"fn": "addShapeLayer", "type": "rectangle", "params": {"x": 950, "y": 560, "width": 120, "height": 3, "fillColor": "#d4af37"}},
+      {"fn": "addTextLayer", "text": "Speaker Title", "font": "Montserrat-Light", "size": 36, "color": "#d4af37", "x": 950, "y": 620, "letterSpacing": 3},
+      {"fn": "addShapeLayer", "type": "rectangle", "params": {"x": 60, "y": 60, "width": 1800, "height": 960, "strokeColor": "#d4af37", "strokeWidth": 1, "fillColor": "transparent", "opacity": 30}},
+      {"fn": "exportPNG", "path": "/path/to/output.png"}
+    ],
+    "output": "/path/to/output.png"
+  },
+  "square_variant": {
+    "description": "Square version for social media (1080x1080)",
+    "app": "photoshop",
+    "operations": [
+      {"fn": "createDocument", "width": 1080, "height": 1080, "name": "hlwd_speaker_square", "colorMode": "RGB"},
+      {"fn": "applyGradient", "layer": "Background", "startColor": "#0a1628", "endColor": "#0d1f38", "angle": 145},
+      {"fn": "addShapeLayer", "type": "ellipse", "params": {"x": 540, "y": 380, "width": 420, "height": 420, "strokeColor": "#d4af37", "strokeWidth": 2, "fillColor": "transparent"}},
+      {"fn": "addShapeLayer", "type": "ellipse", "params": {"x": 540, "y": 380, "width": 400, "height": 400, "fillColor": "#0d1f38"}},
+      {"fn": "importImage", "path": "{{headshot_path}}", "x": 290, "y": 130, "width": 500, "height": 500, "removeBackground": true},
+      {"fn": "applyEffect", "layer": "imported_image", "effectName": "dropShadow", "params": {"opacity": 50, "distance": 20, "blur": 40, "color": "#000000"}},
+      {"fn": "addShapeLayer", "type": "rectangle", "params": {"x": 490, "y": 680, "width": 100, "height": 3, "fillColor": "#d4af37"}},
+      {"fn": "addTextLayer", "text": "{{speaker_name}}", "font": "Playfair Display-Bold", "size": 64, "color": "#ffffff", "x": 540, "y": 760, "alignment": "center"},
+      {"fn": "addShapeLayer", "type": "rectangle", "params": {"x": 490, "y": 810, "width": 100, "height": 2, "fillColor": "#d4af37"}},
+      {"fn": "addTextLayer", "text": "{{speaker_title}}", "font": "Montserrat-Light", "size": 28, "color": "#d4af37", "x": 540, "y": 880, "alignment": "center"},
+      {"fn": "addShapeLayer", "type": "rectangle", "params": {"x": 40, "y": 40, "width": 1000, "height": 1000, "strokeColor": "#d4af37", "strokeWidth": 1, "fillColor": "transparent", "opacity": 30}},
+      {"fn": "exportPNG", "path": "{{output_path}}"}
+    ]
+  },
+  "created_at": "2025-12-16",
+  "version": "1.0"
+}
