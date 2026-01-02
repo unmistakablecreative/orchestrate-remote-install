@@ -1,0 +1,4 @@
+#!/bin/bash
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+cd "$HOME/Orchestrate Github/orchestrate-jarvis"
+python3 execution_hub.py execute_task --params '{"tool_name": "claude_assistant", "action": "self_assign_from_doc", "params": {}}'
