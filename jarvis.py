@@ -200,6 +200,18 @@ app.mount(
     name="landing_page_template_thumbnails"
 )
 
+app.mount(
+    "/data",
+    StaticFiles(directory=os.path.join(BASE_DIR, "data")),
+    name="data"
+)
+
+app.mount(
+    "/dashboard",
+    StaticFiles(directory=os.path.join(BASE_DIR, "semantic_memory/execution_dashboard"), html=True),
+    name="dashboard"
+)
+
 # 🚦 Rate limiting middleware
 def check_rate_limit(endpoint: str, client_id: str = "default"):
     """Check if request should be rate limited"""

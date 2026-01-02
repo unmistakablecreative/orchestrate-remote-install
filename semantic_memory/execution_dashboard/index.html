@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrchestrateOS - Live Task Queue</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-primary: #0a0a12;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(255,255,255,0.03);
+            --border: rgba(255,255,255,0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #888899;
+            --accent-cyan: #00f5d4;
+            --accent-blue: #00bbf9;
+            --accent-purple: #9b5de5;
+            --accent-yellow: #ffc107;
+            --accent-red: #ff6b6b;
+            --accent-green: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(0,245,212,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(155,93,229,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0,187,249,0.05) 0%, transparent 70%);
+            z-index: 0;
+            animation: gradientShift 20s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            box-shadow: 0 8px 32px rgba(0,245,212,0.3);
+        }
+
+        .title-group h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .title-group .subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .status-badges {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,245,212,0.1);
+            border: 1px solid rgba(0,245,212,0.3);
+            padding: 8px 16px;
+            border-radius: 24px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0,245,212,0.7); }
+            50% { box-shadow: 0 0 0 12px rgba(0,245,212,0); }
+        }
+
+        .refresh-badge {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(0,245,212,0.3);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 42px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1;
+        }
+
+        .stat-value.cyan { color: var(--accent-cyan); }
+        .stat-value.yellow { color: var(--accent-yellow); }
+        .stat-value.green { color: var(--accent-green); }
+        .stat-value.purple { color: var(--accent-purple); }
+        .stat-value.blue { color: var(--accent-blue); }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 12px;
+        }
+
+        /* Main Layout - Results primary (70%), Queue sidebar (30%) */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 70% 30%;
+            gap: 24px;
+        }
+
+        /* Queue Panel */
+        .queue-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-title {
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-title .icon {
+            font-size: 18px;
+        }
+
+        .queue-count {
+            background: rgba(0,245,212,0.15);
+            color: var(--accent-cyan);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .task-list {
+            max-height: calc(100vh - 380px);
+            overflow-y: auto;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .task-item:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .task-item.in-progress {
+            background: rgba(255,193,7,0.05);
+            border-left: 3px solid var(--accent-yellow);
+        }
+
+        .task-item.queued {
+            border-left: 3px solid var(--text-secondary);
+        }
+
+        .task-item.done {
+            border-left: 3px solid var(--accent-green);
+            opacity: 0.7;
+        }
+
+        .task-item.error {
+            border-left: 3px solid var(--accent-red);
+        }
+
+        .status-indicator {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .status-indicator.in-progress {
+            background: rgba(255,193,7,0.15);
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+
+        .status-indicator.queued {
+            background: rgba(136,136,153,0.15);
+        }
+
+        .status-indicator.done {
+            background: rgba(16,185,129,0.15);
+        }
+
+        .status-indicator.error {
+            background: rgba(255,107,107,0.15);
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .task-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .task-id {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-id .priority-badge {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .priority-high {
+            background: rgba(255,107,107,0.2);
+            color: var(--accent-red);
+        }
+
+        .priority-medium {
+            background: rgba(255,193,7,0.2);
+            color: var(--accent-yellow);
+        }
+
+        .priority-low {
+            background: rgba(136,136,153,0.2);
+            color: var(--text-secondary);
+        }
+
+        .task-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 8px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .task-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .task-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .status-label {
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-label.in-progress {
+            background: rgba(255,193,7,0.2);
+            color: var(--accent-yellow);
+        }
+
+        .status-label.queued {
+            background: rgba(136,136,153,0.2);
+            color: var(--text-secondary);
+        }
+
+        .status-label.done {
+            background: rgba(16,185,129,0.2);
+            color: var(--accent-green);
+        }
+
+        .status-label.error {
+            background: rgba(255,107,107,0.2);
+            color: var(--accent-red);
+        }
+
+        /* Recent Completions */
+        .completions-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .completion-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .completion-item:last-child {
+            border-bottom: none;
+        }
+
+        .completion-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .completion-icon.success {
+            background: rgba(16,185,129,0.15);
+        }
+
+        .completion-icon.error {
+            background: rgba(255,107,107,0.15);
+        }
+
+        .completion-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .completion-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .completion-meta {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .completion-meta .tokens {
+            color: var(--accent-purple);
+            background: rgba(155,93,229,0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .completion-meta .time {
+            color: var(--text-secondary);
+        }
+
+        /* Empty state */
+        .empty-state {
+            padding: 60px 24px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo-section">
+                <div class="logo">O</div>
+                <div class="title-group">
+                    <h1>Task Queue Dashboard</h1>
+                    <div class="subtitle">Real-time execution monitoring</div>
+                </div>
+            </div>
+            <div class="status-badges">
+                <div class="live-badge">
+                    <div class="pulse-dot"></div>
+                    <span>Live</span>
+                </div>
+                <div class="refresh-badge">Refresh in <span id="countdown">5</span>s</div>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value cyan" id="stat-total">0</div>
+                <div class="stat-label">Total Tasks</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value yellow" id="stat-in-progress">0</div>
+                <div class="stat-label">In Progress</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value purple" id="stat-queued">0</div>
+                <div class="stat-label">Queued</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value green" id="stat-completed">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value blue" id="stat-success-rate">0%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Results Panel (Primary - Left 70%) -->
+            <div class="completions-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="icon">📊</span>
+                        Execution Results
+                    </div>
+                </div>
+                <div id="completions-list">
+                    <div class="empty-state">
+                        <div class="icon">📭</div>
+                        <h3>No results yet</h3>
+                        <p>Completed tasks will appear here</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Queue Panel (Sidebar - Right 30%) -->
+            <div class="queue-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="icon">📋</span>
+                        Queue
+                    </div>
+                    <div class="queue-count" id="queue-count">0</div>
+                </div>
+                <div class="task-list" id="task-list">
+                    <div class="empty-state">
+                        <div class="icon">✨</div>
+                        <h3>Queue empty</h3>
+                        <p>Tasks appear here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Powered by <a href="#">OrchestrateOS</a> | Last updated: <span id="last-updated">--</span></p>
+        </footer>
+    </div>
+
+    <script>
+        let taskData = { queue: {}, results: {} };
+        let countdown = 5;
+
+        function getStatusIcon(status) {
+            switch(status) {
+                case 'in_progress': return '⚡';
+                case 'done': return '✓';
+                case 'error': return '✗';
+                default: return '○';
+            }
+        }
+
+        function formatTimeAgo(dateStr) {
+            if (!dateStr) return '--';
+            const date = new Date(dateStr);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMins / 60);
+
+            if (diffMins < 1) return 'just now';
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffHours < 24) return `${diffHours}h ago`;
+            return date.toLocaleDateString();
+        }
+
+        function formatDuration(seconds) {
+            if (!seconds || seconds < 1) return '<1s';
+            if (seconds < 60) return `${seconds.toFixed(1)}s`;
+            return `${Math.floor(seconds / 60)}m ${Math.floor(seconds % 60)}s`;
+        }
+
+        function renderTaskList() {
+            const container = document.getElementById('task-list');
+            const queueTasks = Object.entries(taskData.queue || {});
+
+            // Sort: in_progress first, then by created_at (oldest first = queue order)
+            queueTasks.sort((a, b) => {
+                if (a[1].status === 'in_progress' && b[1].status !== 'in_progress') return -1;
+                if (b[1].status === 'in_progress' && a[1].status !== 'in_progress') return 1;
+                return new Date(a[1].created_at || 0) - new Date(b[1].created_at || 0);
+            });
+
+            if (queueTasks.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">✨</div>
+                        <h3>Queue empty</h3>
+                        <p>Tasks appear here</p>
+                    </div>
+                `;
+                document.getElementById('queue-count').textContent = '0';
+                return;
+            }
+
+            document.getElementById('queue-count').textContent = queueTasks.length;
+
+            // Simplified queue: task name, status indicator, priority badge only
+            let html = '';
+            queueTasks.forEach(([id, task]) => {
+                const status = task.status || 'queued';
+                const priority = task.priority || 'medium';
+
+                html += `
+                    <div class="task-item ${status.replace('_', '-')}" style="padding: 12px 16px;">
+                        <div class="status-indicator ${status.replace('_', '-')}" style="width: 32px; height: 32px; font-size: 14px;">
+                            ${getStatusIcon(status)}
+                        </div>
+                        <div class="task-content">
+                            <div class="task-id" style="font-size: 13px;">
+                                ${id.replace(/_/g, ' ')}
+                                <span class="priority-badge priority-${priority}">${priority}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function formatActionsTaken(actions) {
+            if (!actions) return '';
+            // Handle both string and array formats
+            let text = '';
+            if (Array.isArray(actions)) {
+                text = actions.join(' | ');
+            } else {
+                text = String(actions);
+            }
+            // No truncation - show full text
+            return text;
+        }
+
+        function renderCompletions() {
+            const container = document.getElementById('completions-list');
+            const results = Object.entries(taskData.results || {});
+
+            // Sort by completed_at descending
+            results.sort((a, b) => {
+                return new Date(b[1].completed_at || 0) - new Date(a[1].completed_at || 0);
+            });
+
+            const recent = results.slice(0, 15);
+
+            if (recent.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📭</div>
+                        <h3>No results yet</h3>
+                        <p>Completed tasks will appear here</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            recent.forEach(([id, task]) => {
+                const isSuccess = task.status === 'done';
+                const icon = isSuccess ? '✓' : '✗';
+                const iconClass = isSuccess ? 'success' : 'error';
+                const tokens = task.tokens?.total || task.token_cost || 0;
+                const execTime = task.execution_time_seconds ? formatDuration(task.execution_time_seconds) : '--';
+                const actionsTaken = formatActionsTaken(task.actions_taken);
+
+                html += `
+                    <div class="completion-item" style="flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+                            <div class="completion-icon ${iconClass}">${icon}</div>
+                            <div class="completion-title" style="flex: 1; font-size: 14px; font-weight: 600;">${id.replace(/_/g, ' ')}</div>
+                            <span class="status-label ${isSuccess ? 'done' : 'error'}" style="margin-left: auto;">${task.status}</span>
+                        </div>
+                        <div class="completion-meta" style="width: 100%; justify-content: flex-start;">
+                            <span class="exec-time" style="color: #00f5d4; font-weight: 600;">⏱️ ${execTime}</span>
+                            <span class="tokens">⚡ ${tokens.toLocaleString()} tokens</span>
+                        </div>
+                        ${actionsTaken ? `<div style="font-size: 12px; color: var(--text-secondary); line-height: 1.5; width: 100%;">${actionsTaken}</div>` : ''}
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function updateStats() {
+            const queueTasks = Object.values(taskData.queue || {});
+            const results = Object.values(taskData.results || {});
+
+            const inProgress = queueTasks.filter(t => t.status === 'in_progress').length;
+            const queued = queueTasks.filter(t => !t.status || t.status === 'queued' || t.status === 'pending').length;
+            const completed = results.filter(t => t.status === 'done').length;
+            const errors = results.filter(t => t.status === 'error').length;
+            const total = queueTasks.length + results.length;
+            const successRate = results.length > 0 ? Math.round((completed / results.length) * 100) : 0;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-in-progress').textContent = inProgress;
+            document.getElementById('stat-queued').textContent = queued;
+            document.getElementById('stat-completed').textContent = completed;
+            document.getElementById('stat-success-rate').textContent = successRate + '%';
+            document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
+        }
+
+        async function fetchData() {
+            try {
+                const [queueRes, resultsRes] = await Promise.all([
+                    fetch('../../data/claude_task_queue.json').catch(() => ({ ok: false })),
+                    fetch('../../data/claude_task_results.json').catch(() => ({ ok: false }))
+                ]);
+
+                if (queueRes.ok) {
+                    const data = await queueRes.json();
+                    taskData.queue = data.tasks || {};
+                }
+
+                if (resultsRes.ok) {
+                    const data = await resultsRes.json();
+                    taskData.results = data.results || {};
+                }
+
+                renderTaskList();
+                renderCompletions();
+                updateStats();
+            } catch (e) {
+                console.error('Error fetching data:', e);
+            }
+        }
+
+        // SSE for instant updates
+        let eventSource = null;
+        function connectSSE() {
+            eventSource = new EventSource('http://localhost:5001/api/task-updates');
+
+            eventSource.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    if (data.file) {  // Real file change (not heartbeat)
+                        fetchData();  // Refresh instantly
+                        document.getElementById('countdown').textContent = '⚡';
+                    }
+                } catch (e) {
+                    console.error('SSE parse error:', e);
+                }
+            };
+
+            eventSource.onerror = () => {
+                console.log('SSE disconnected, falling back to polling');
+                eventSource.close();
+                // Fallback to polling if SSE fails
+                setInterval(() => {
+                    countdown--;
+                    document.getElementById('countdown').textContent = countdown;
+                    if (countdown <= 0) {
+                        countdown = 5;
+                        fetchData();
+                    }
+                }, 1000);
+            };
+
+            eventSource.onopen = () => {
+                document.querySelector('.refresh-badge').innerHTML = '<span style="color:#00f5d4">⚡ Live SSE</span>';
+            };
+        }
+
+        // Try SSE first, fallback to polling
+        connectSSE();
+
+        // Initial fetch
+        fetchData();
+    </script>
+</body>
+</html>
