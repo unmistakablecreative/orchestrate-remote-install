@@ -537,6 +537,140 @@
             text-decoration: none;
         }
 
+        /* Clear Queue Button */
+        .clear-queue-btn {
+            background: rgba(255,107,107,0.15);
+            border: 1px solid rgba(255,107,107,0.3);
+            color: var(--accent-red);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .clear-queue-btn:hover {
+            background: rgba(255,107,107,0.25);
+            border-color: rgba(255,107,107,0.5);
+            transform: translateY(-1px);
+        }
+
+        .clear-queue-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.success {
+            background: rgba(16,185,129,0.9);
+            color: white;
+        }
+
+        .toast.error {
+            background: rgba(255,107,107,0.9);
+            color: white;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Confirmation modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--accent-red);
+        }
+
+        .modal p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .modal-btn.cancel {
+            background: rgba(136,136,153,0.2);
+            color: var(--text-secondary);
+        }
+
+        .modal-btn.cancel:hover {
+            background: rgba(136,136,153,0.3);
+        }
+
+        .modal-btn.confirm {
+            background: var(--accent-red);
+            color: white;
+        }
+
+        .modal-btn.confirm:hover {
+            background: #ff5252;
+        }
+
         /* Responsive */
         @media (max-width: 1200px) {
             .main-grid {
@@ -628,7 +762,13 @@
                         <span class="icon">📋</span>
                         Queue
                     </div>
-                    <div class="queue-count" id="queue-count">0</div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <button class="clear-queue-btn" onclick="showClearConfirmation()">
+                            <span>🗑️</span>
+                            Clear Queue
+                        </button>
+                        <div class="queue-count" id="queue-count">0</div>
+                    </div>
                 </div>
                 <div class="task-list" id="task-list">
                     <div class="empty-state">
@@ -875,6 +1015,89 @@
 
         // Initial fetch
         fetchData();
+
+        // Clear Queue functionality
+        function showClearConfirmation() {
+            const queueCount = Object.keys(taskData.queue || {}).length;
+            if (queueCount === 0) {
+                showToast('Queue is already empty', 'success');
+                return;
+            }
+
+            const overlay = document.createElement('div');
+            overlay.className = 'modal-overlay';
+            overlay.id = 'clear-modal';
+            overlay.innerHTML = `
+                <div class="modal">
+                    <h3>⚠️ Clear Task Queue?</h3>
+                    <p>Are you sure? This will delete all ${queueCount} queued task${queueCount > 1 ? 's' : ''}. This action cannot be undone.</p>
+                    <div class="modal-buttons">
+                        <button class="modal-btn cancel" onclick="closeModal()">Cancel</button>
+                        <button class="modal-btn confirm" onclick="clearQueue()">Clear Queue</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+
+            // Close on overlay click
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) closeModal();
+            });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('clear-modal');
+            if (modal) modal.remove();
+        }
+
+        async function clearQueue() {
+            closeModal();
+
+            try {
+                // Write empty tasks object to the queue file
+                const emptyQueue = { tasks: {} };
+
+                // Try to use the execution hub endpoint if available
+                const response = await fetch('http://localhost:5001/api/clear-queue', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                }).catch(() => null);
+
+                if (response && response.ok) {
+                    showToast('✓ Queue cleared successfully', 'success');
+                } else {
+                    // Fallback: write directly to file via simple endpoint or just update local state
+                    // Since we can't write files directly from browser, show instruction
+                    showToast('Clear queue via: echo \'{"tasks":{}}\' > data/claude_task_queue.json', 'error');
+                    return;
+                }
+
+                // Clear local state and refresh
+                taskData.queue = {};
+                renderTaskList();
+                updateStats();
+            } catch (error) {
+                console.error('Clear queue error:', error);
+                showToast('Failed to clear queue: ' + error.message, 'error');
+            }
+        }
+
+        function showToast(message, type) {
+            // Remove existing toast
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${type === 'success' ? '✓' : '✗'}</span> ${message}`;
+            document.body.appendChild(toast);
+
+            // Auto-remove after 4 seconds
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
     </script>
 </body>
 </html>
